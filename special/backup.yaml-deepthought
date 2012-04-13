@@ -1,0 +1,20 @@
+---
+access_key_id: AKIAIIH2G4KHQCACC6KQ
+secret_access_key: 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
+bucket: MREXCEPTION_BACKUPS
+temp_dir: /home/rob/tmp/
+log: /home/rob/backup.log
+local_name: Deepthought
+dirs:
+- loc: /home/rob/Dropbox/git/aboveall.git
+  hash: 19f1a9b87968ee6d59b932325c62194c
+  name: aboveall
+- loc: /home/rob/Dropbox/git/scripts.git
+  hash: 875be3ece3d8b1769d53b1da2cdecd5b
+  name: scripts
+- loc: /home/rob/Dropbox/git/documents.git
+  hash: ace96b9cb844db934cb62098e587c3e9
+  name: documents
+- loc: /home/rob/Dropbox/git/dotfiles.git
+  hash: 8e388bf5d34b220f54f94501449360c6
+  name: dotfiles

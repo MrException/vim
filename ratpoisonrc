@@ -1,0 +1,44 @@
+# make the escape sequence Ctrl-z
+escape C-z
+
+# bind C-z H and L to go to left and right screens, respectively
+bind H sselect 0
+bind L sselect 1
+
+# frame navigation keys
+bind h focusleft
+bind j focusdown
+bind k focusup
+bind l focusright
+
+# click the middle mouse button, good for pasting
+bind v ratclick 2
+
+# show the time
+bind t time
+
+# show a list of windows in a little menu
+bind w exec ~/scripts/ratpoison/rat-windows.sh
+
+# bind C-z x to close the current window
+# and C-z X to KILL a window (if it won't close with x)
+bind x delete
+bind X kill
+
+# quit ratpoison
+bind Q quit
+
+# application key bindings
+bind c exec urxvt
+bind g exec chromium
+bind b exec banshee
+
+# don't let ratpoison do anything to trayer and make room for it
+unmanage panel
+set padding 0 0 0 26
+
+# start up urxvt
+exec urxvt
+exec ~/scripts/ratpoison/start-trayer.sh
+exec ~/scripts/ratpoison/start-clock.sh
+exec nm-applet

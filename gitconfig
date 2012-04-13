@@ -1,0 +1,16 @@
+[color]
+	ui = auto
+[user]
+	name = Robert McBride
+	email = robmcbride@gmail.com
+[alias]
+	co = checkout
+	ps = push
+	pl = pull
+	ci = commit
+	ca = commit -a
+	b = checkout -b
+[init]
+	templatedir = ~/.git_template
+[core]
+	excludesfile = /home/rob/.gitignore

@@ -1,0 +1,4 @@
+--type-add
+haml=.haml
+--type-add
+scss=.scss

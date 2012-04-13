@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='scp://rob@173.230.155.235:1398//home/rob/'
+let g:netrw_dirhist_2='scp://rob@173.230.155.235:1398//home/rob/sites/'
+let g:netrw_dirhist_3='scp://rob@173.230.155.235:1398//home/rob/sites/donoharm/'
+let g:netrw_dirhist_4='scp://rob@173.230.155.235:1398//home/rob/sites/donoharm/wordpress/'
+let g:netrw_dirhist_5='scp://rob@173.230.155.235//home/rob/sites/donoharm/'
