@@ -47,6 +47,14 @@ git clone http://github.com/vim-scripts/matchit.zip.git
 git clone http://github.com/godlygeek/tabular.git
 git clone http://github.com/chrisbra/csv.vim.git
 
+git clone http://github.com/ervandew/supertab.git
+
+# snipmate and deps
+git clone http://github.com/tomtom/tlib_vim.git
+git clone http://github.com/MarcWeber/vim-addon-mw-utils.git
+git clone http://github.com/garbas/vim-snipmate.git
+git clone http://github.com/honza/snipmate-snippets
+
 git clone http://github.com/tpope/vim-fugitive.git
 git clone http://github.com/vim-scripts/dbext.vim.git
 
@@ -70,9 +78,6 @@ git clone http://github.com/vim-scripts/nxc.vim.git
 # No longer used plugins
 # that I may use again
 ##############
-
-# Like snippets idea, but don't reall use them and snipmate fucks up tab
-#git clone http://github.com/msanders/snipmate.vim.git
 
 # possible alternative to snipmate?
 #git clone http://github.com/SirVer/ultisnips.git
@@ -101,9 +106,6 @@ git clone http://github.com/vim-scripts/nxc.vim.git
 # some plugins for java
 #git clone http://github.com/vim-scripts/java_getset.vim.git
 #git clone http://github.com/vim-scripts/javacomplete.git
-
-# not using supertab for now, it conflicts with to many plugins
-#git clone http://github.com/ervandew/supertab.git
 
 # latex-box - helpful latex stuff
 #bzr branch lp:vim-latex-box
@@ -139,4 +141,12 @@ cd bundle/syntastic/syntax_checkers
 ln -s ../../../syntax_checkers/* ./
 cd $root
 
-echo "DONE"
+cat <<END
+  >> If you want command-t, don't forget to compile it!
+  >>
+  >> cd ~/.vim/bundle/Command-T/ruby/command-t
+  >> ruby extconf.rb
+  >> make
+
+DONE
+END

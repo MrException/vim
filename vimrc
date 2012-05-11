@@ -485,9 +485,9 @@ nnoremap <silent> <Leader>T :call RunNearestTest()<cr>
 " Run all test files
 nnoremap <silent> <Leader>A :call RunTests('')<cr>
 
-" smart tab completion
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <s-tab> <c-n>
+" smart tab completion - see functions above
+"inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+"inoremap <s-tab> <c-n>
 
 " close the current buffer, and close the current window
 nnoremap <silent> <Leader>bd :BD<cr>\|<C-w>c
@@ -506,8 +506,6 @@ augroup vimrcEx
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif 
-
-  autocmd VimEnter * unmap! <Tab>
 augroup END
 "}}}
 
@@ -560,9 +558,13 @@ augroup END
 "}}}
 
 "=====================Java stuff====================="{{{
-" turn off java mappings
-" only mappings so far should be in java_getset
-"let g:no_java_maps = 1
+"this is all mainly eclim stuff
+augroup javaEx
+ " Clear all autocmds in the group
+  autocmd!
+
+  let g:EclimBrowser = 'chromium'
+augroup END
 "}}}
 
 "=====================MiniBufExplorer settings====================="{{{
@@ -621,7 +623,6 @@ nnoremap <silent> <Leader>l :TlistToggle<CR>
 "}}}
 
 "=====================SuperTab settings====================="{{{
-"SuperTab not used anymore, conflicted to much with DelimitMate and SnipMate
 "let g:SuperTabDefaultCompletionType="context"
 "let g:SuperTabMappingForward = '<c-space>'
 "let g:SuperTabMappingBackward = '<s-c-space>'
@@ -647,8 +648,8 @@ nnoremap <C-S-e> :Errors<CR>
 "}}}
 
 "=====================SnipMate settings====================="{{{
-"Not using snipmate, to hard to remap tab to what I want
-"let g:snips_author = 'Robert McBride'
+let g:snips_author = 'Robert McBride'
+let g:snips_trigger_key='<c-space>'
 "}}}
 
 "=====================ZenCoding settings====================="{{{
