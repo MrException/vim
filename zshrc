@@ -39,6 +39,9 @@ SYS_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 export PATH=$SYS_PATH:$HOME/bin:$HOME/scripts:$HOME/local/bin:$HOME/local/node/bin:$HOME/.rvm/bin
 export NODE_PATH=$HOME/local/node:$HOME/local/node/lib/node_modules
 
+# make sure vim is set as the editor
+export EDITOR="vim"
+
 #initialize keychain
 keychain github
 
@@ -72,3 +75,8 @@ fi
 
 # a hack to get vim in the cli to look good in screen
 [ $TERM = "screen" ] && export TERM=rxvt-256color
+
+# needed for ant support
+if [ -f /etc/profile.d/apache-ant.sh ]; then
+  source /etc/profile.d/apache-ant.sh
+fi
