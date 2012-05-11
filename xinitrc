@@ -34,6 +34,9 @@ xmodmap /home/rob/.Xmodmap
 # wicd is a good wireless connection manager
 #wicd-client
 
+# make sure numlock is always on
+numlockx &
+
 #exec ck-launch-session dbus-launch xmonad
 exec dbus-launch xmonad
 
