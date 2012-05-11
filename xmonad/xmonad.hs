@@ -219,6 +219,7 @@ myManageHook = composeAll
     , className =? "Banshee"        --> doShift "4:music"
     , className =? "Zenity"         --> doShift "5:other"
     , className =? "VirtualBox"     --> doShift "5:other"
+    , title     =? "MARDP"          --> doShift "5:other"
     ]
 
 ------------------------------------------------------------------------
