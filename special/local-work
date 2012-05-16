@@ -1,0 +1,9 @@
+### env variables
+export JAVA_HOME="/cygdrive/c/Program Files/Java/jdk1.6.0_31"
+export ANT_HOME="/cygdrive/c/Users/robertm/.ant"
+
+export PATH=$PATH:$ANT_HOME/bin
+
+### aliases
+alias maant='cd ~/workspace/EMR\ v44x/ && ant -f build-development.xml && cd -'
+alias maantclean='cd ~/workspace/EMR\ v44x/ && ant -f build-development.xml clean && cd -'
