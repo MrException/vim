@@ -58,7 +58,7 @@ screen -t ZSH	    2 zsh
 # ===============================================================
 # VARIABLES - Number values
 # ===============================================================
-  defscrollback         3000            # default: 100
+  defscrollback         30000            # default: 100
 # msgminwait            3               # default: 1
   silencewait           15              # default: 30
 #
