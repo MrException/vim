@@ -73,8 +73,11 @@ if [ -f ~/.functions ]; then
   . ~/.functions
 fi
 
+if [ -f ~/.local ]; then
+  source ~/.local
+fi
 # a hack to get vim in the cli to look good in screen
-[ $TERM = "screen" ] && export TERM=rxvt-256color
+#[ $TERM = "screen" ] && export TERM=rxvt-256color
 
 # needed for ant support
 if [ -f /etc/profile.d/apache-ant.sh ]; then
