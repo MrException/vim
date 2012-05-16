@@ -2,3 +2,5 @@
 haml=.haml
 --type-set
 scss=.scss
+--ignore-dir=build
+--ignore-dir=emr-build
