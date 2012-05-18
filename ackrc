@@ -2,5 +2,12 @@
 haml=.haml
 --type-set
 scss=.scss
+--type-set
+tag=.tag
+--type-set
+jsp=.jsp,.jspf
+--type-set
+tld=.tld
 --ignore-dir=build
 --ignore-dir=emr-build
+--nosql
