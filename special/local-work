@@ -7,3 +7,4 @@ export PATH=$PATH:$ANT_HOME/bin
 ### aliases
 alias maant='cd ~/workspace/EMR\ v44x/ && ant -f build-development.xml && cd -'
 alias maantclean='cd ~/workspace/EMR\ v44x/ && ant -f build-development.xml clean && cd -'
+alias maantall='maantclean && maant'
