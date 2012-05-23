@@ -164,7 +164,6 @@ set guioptions-=m
 " set the font to something nice
 "set guifont=Inconsolata\ Medium\ 18
 set guifont=Inconsolata:h12
-$
 
 " Set up the gui cursor to look nice
 set guicursor=n-v-c:block-Cursor-blinkon0

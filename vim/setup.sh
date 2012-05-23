@@ -36,8 +36,8 @@ git clone http://github.com/tpope/vim-surround.git
 git clone http://github.com/scrooloose/syntastic.git
 git clone http://github.com/mattn/zencoding-vim.git
 git clone http://github.com/vim-scripts/bufkill.vim.git
-git clone http://github.com/vim-scripts/taglist.vim.git
-git clone http://github.com/wincent/Command-T.git
+git clone git://github.com/majutsushi/tagbar
+git clone https://github.com/kien/ctrlp.vim.git
 git clone http://github.com/tpope/vim-rails.git
 git clone http://github.com/mileszs/ack.vim.git
 git clone http://github.com/michaeljsmith/vim-indent-object.git
@@ -140,13 +140,3 @@ cd $root
 cd bundle/syntastic/syntax_checkers
 ln -s ../../../syntax_checkers/* ./
 cd $root
-
-cat <<END
-  >> If you want command-t, don't forget to compile it!
-  >>
-  >> cd ~/.vim/bundle/Command-T/ruby/command-t
-  >> ruby extconf.rb
-  >> make
-
-DONE
-END

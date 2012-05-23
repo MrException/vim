@@ -163,7 +163,7 @@ set guioptions-=m
 
 " set the font to something nice
 "set guifont=Inconsolata\ Medium\ 18
-set guifont=Inconsolata\ Medium\ 12
+set guifont=Inconsolata:h12
 
 " Set up the gui cursor to look nice
 set guicursor=n-v-c:block-Cursor-blinkon0
@@ -192,8 +192,10 @@ vnoremap <Space> zf
 "colorscheme zenburn
 "colorscheme mayansmoke "a nice light scheme
 if has("gui_running")
-  colorscheme neverland
+  colorscheme Tomorrow-Night-Eighties
+  "colorscheme neverland
 else
+  "colorscheme Tomorrow-Night-Eighties
   colorscheme zenburn
 endif
 
@@ -374,6 +376,33 @@ function! InsertTabWrapper()
         return "\<c-p>"
     endif
 endfunction
+
+function! GetBufferList()
+  redir =>buflist
+  silent! ls
+  redir END
+  return buflist
+endfunction
+
+function! ToggleList(bufname, pfx)
+  let buflist = GetBufferList()
+  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+    if bufwinnr(bufnum) != -1
+      exec(a:pfx.'close')
+      return
+    endif
+  endfor
+  if a:pfx == 'l' && len(getloclist(0)) == 0
+      echohl ErrorMsg
+      echo "Location List is Empty."
+      return
+  endif
+  let winnr = winnr()
+  exec(a:pfx.'open')
+  if winnr() != winnr
+    wincmd p
+  endif
+endfunction
 "}}}
 
 "=====================Key Mappings====================="{{{
@@ -488,7 +517,7 @@ nnoremap <silent> <Leader>T :call RunNearestTest()<cr>
 " Run all test files
 nnoremap <silent> <Leader>A :call RunTests('')<cr>
 
-" smart tab completion - see functions above
+" smart tab completion
 "inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 "inoremap <s-tab> <c-n>
 
@@ -497,6 +526,13 @@ nnoremap <silent> <Leader>bd :BD<cr>\|<C-w>c
 
 " Insert a hash rocket with <c-l>
 inoremap <c-l> <space>=><space>
+
+nnoremap <silent> <buffer> <F3> :JavaSearchContext<cr>
+nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
+
+" toggle display of quickfix, and location list
+nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c')<CR>
+nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 "}}}
 
 "=====================General Autocommands====================="{{{
@@ -509,7 +545,11 @@ augroup vimrcEx
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif 
+
+  "autocmd VimEnter * unmap! <Tab>
 augroup END
+
+autocmd BufEnter * let &titlestring = "VIM | " . expand("%:t") . " |"
 "}}}
 
 "=====================Clojure Setup====================="{{{
@@ -560,16 +600,6 @@ augroup mylatex
 augroup END
 "}}}
 
-"=====================Java stuff====================="{{{
-"this is all mainly eclim stuff
-augroup javaEx
- " Clear all autocmds in the group
-  autocmd!
-
-  let g:EclimBrowser = 'chromium'
-augroup END
-"}}}
-
 "=====================MiniBufExplorer settings====================="{{{
 "Not using minibufexpl anymore
 "let g:miniBufExplMapCTabSwitchBufs = 1
@@ -579,22 +609,13 @@ augroup END
 "let g:miniBufExplorerMoreThanOne = 0
 "}}}
 
-"=====================Command-t settings====================="{{{
-" Open files with <leader>f
-nnoremap <silent> <Leader>f :CommandTFlush<cr>\|:CommandT<cr>
-" Open files, limited to the directory of the current file, with <leader>gf
-" This requires the %% mapping found above.
-nnoremap <silent> <Leader>gf :CommandTFlush<cr>\|:CommandT %%<cr>
-
-nnoremap <silent> <Leader>ga :CommandTFlush<cr>\|:CommandT app/assets<cr>
-nnoremap <silent> <Leader>gv :CommandTFlush<cr>\|:CommandT app/views<cr>
-nnoremap <silent> <Leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
-nnoremap <silent> <Leader>gm :CommandTFlush<cr>\|:CommandT app/models<cr>
-nnoremap <silent> <Leader>gh :CommandTFlush<cr>\|:CommandT app/helpers<cr>
-nnoremap <silent> <Leader>gl :CommandTFlush<cr>\|:CommandT lib<cr>
-nnoremap <silent> <Leader>gs :CommandTFlush<cr>\|:CommandT app/assets/stylesheets<cr>
-nnoremap <silent> <Leader>gj :CommandTFlush<cr>\|:CommandT app/assets/javascripts<cr>
-nnoremap <silent> <Leader>gt :CommandTFlush<cr>\|:CommandT spec/<cr>
+"=====================CtrlP settings====================="{{{
+" Open files with ,f
+let g:ctrlp_map = "<leader>f"
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_max_depth = 100
+let g:ctrlp_max_files = 100000
+let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*'
 "}}}
 
 "=====================NerdTree settings====================="{{{
@@ -605,30 +626,25 @@ let g:NERDTreeShowBookmarks=1
 nnoremap <silent> <Leader>d :NERDTreeToggle<CR>
 "}}}
 
-"=====================TagList settings====================="{{{
-let g:Tlist_Use_Right_Window=1
-let g:Tlist_Auto_Open=0
-let g:Tlist_Enable_Fold_Column=0
-let g:Tlist_Compact_Format=0
-let g:Tlist_WinWidth=28
-let g:Tlist_Exit_OnlyWindow=1
-let g:Tlist_File_Fold_Auto_Close=1
-let g:tlist_clojure_settings='Lisp;f:function'
-
+"=====================Tagbar settings====================="{{{
+nmap <leader>g :TagbarToggle<CR>
+"settings from when I used taglist
+"let g:Tlist_Use_Right_Window=1
+"let g:Tlist_Auto_Open=0
+"let g:Tlist_Enable_Fold_Column=0
+"let g:Tlist_Compact_Format=0
+"let g:Tlist_WinWidth=28
+"let g:Tlist_Exit_OnlyWindow=1
+"let g:Tlist_File_Fold_Auto_Close=1
+"let g:tlist_clojure_settings='Lisp;f:function'
 " toggle taglist window
-nnoremap <silent> <Leader>l :TlistToggle<CR>
-"}}}
-
-"=====================TaskList settings====================="{{{
-" toggle the tasklist window
-" nmap <Leader>k :TaskList<CR>
-
+"nnoremap <silent> <Leader>g :TlistToggle<CR>
 "}}}
 
 "=====================SuperTab settings====================="{{{
-"let g:SuperTabDefaultCompletionType="context"
-"let g:SuperTabMappingForward = '<c-space>'
-"let g:SuperTabMappingBackward = '<s-c-space>'
+let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+let g:SuperTabMappingForward = "<c-space>"
+let g:SuperTabMappingBackward = "<s-c-space>"
 "}}}
 
 "=====================Syntastic settings====================="{{{
@@ -639,27 +655,20 @@ let g:syntastic_enable_signs=1
 nnoremap <C-S-e> :Errors<CR>
 "}}}
 
-"=====================DelimitMate settings====================="{{{
-"not using delimitmate, parts of it are annoying
-"let delimitMate_expand_cr = 1
-"let delimitMate_expand_space = 1
-
-" need to remap this as snipmate uses shift tab for another
-" purpose, this mapping is so we can exit a delimiter without
-" leaving and re-entering insert mode
-"imap <C-Space> <Plug>delimitMateS-Tab
-"}}}
-
 "=====================SnipMate settings====================="{{{
 let g:snips_author = 'Robert McBride'
-let g:snips_trigger_key='<c-space>'
+let g:snips_trigger_key = "<tab>"
+let g:snipMate = {}
+let g:snipMate.scope_aliases = {} 
+let g:snipMate.scope_aliases['jsp'] = 'jsp,html'
 "}}}
 
 "=====================ZenCoding settings====================="{{{
 let g:user_zen_leader_key = '<c-y>'
 "}}}
 
-"=====================LustyJuggler settings====================="{{{
-"Lusty seems to be fucking shit up so not using for now
-"let g:LustyJugglerShowKeys = 'a'
+"=====================Eclim settings====================="{{{
+let g:EclimCssValidate = 0
+let g:EclimHtmlValidate = 0
+let g:EclimBrowser = "chromium"
 "}}}
