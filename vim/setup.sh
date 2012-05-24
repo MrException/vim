@@ -52,7 +52,7 @@ git clone http://github.com/ervandew/supertab.git
 git clone http://github.com/tomtom/tlib_vim.git
 git clone http://github.com/MarcWeber/vim-addon-mw-utils.git
 git clone http://github.com/garbas/vim-snipmate.git
-git clone http://github.com/honza/snipmate-snippets
+#git clone http://github.com/honza/snipmate-snippets
 
 git clone http://github.com/tpope/vim-fugitive.git
 git clone http://github.com/vim-scripts/dbext.vim.git
