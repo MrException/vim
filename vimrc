@@ -1,3 +1,4 @@
+" vim: set foldmethod=marker:
 "=====================General Options====================="{{{
 " break backwards vi compatibility so vim features work
 set nocompatible
@@ -162,8 +163,8 @@ set guioptions-=L
 set guioptions-=m
 
 " set the font to something nice
-"set guifont=Inconsolata\ Medium\ 18
-set guifont=Inconsolata:h12
+set guifont=Inconsolata\ Medium\ 12
+"set guifont=Inconsolata:h12
 
 " Set up the gui cursor to look nice
 set guicursor=n-v-c:block-Cursor-blinkon0
@@ -179,7 +180,7 @@ set cursorline
 
 "=====================Folding options====================="{{{
 " Use markers to decide where to fold
-set foldmethod=marker
+set foldmethod=syntax
 " Add a 2 character column to give visual indication of folds
 set foldcolumn=2
 

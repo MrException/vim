@@ -12,7 +12,6 @@ rm -rf autoload
 rm -rf vim-pathogen
 rm -rf bundle
 rm -rf vimclojure
-rm -rf snippets
 echo "Done removing files."
 
 # install pathogen and ln -s it
@@ -130,11 +129,6 @@ git clone http://github.com/vim-scripts/nxc.vim.git
 
 # back to root vim dir
 cd $root 
-
-# snippets
-mkdir snippets && cd snippets
-#wget --no-check-certificate http://github.com/lvidarte/web2py-snippets/raw/master/web2py.snippets -O web2py.snippets
-cd $root
 
 # link syntax checkers
 cd bundle/syntastic/syntax_checkers
