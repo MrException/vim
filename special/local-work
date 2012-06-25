@@ -1,10 +1,15 @@
 ### env variables
-export JAVA_HOME="/cygdrive/c/Program Files/Java/jdk1.6.0_31"
+export JAVA_HOME="/cygdrive/c/Program Files/Java/jdk1.7.0"
 export ANT_HOME="/cygdrive/c/Users/robertm/.ant"
+export NODE_PATH="/cygdrive/c/Users/robertm/AppData/Roaming/npm:/cygdrive/c/nodejs"
 
-export PATH=$PATH:$ANT_HOME/bin
+LOCAL_PATH=$JAVA_HOME/bin:$ANT_HOME/bin
+
+export PATH=$SYS_PATH:$USER_PATH:$NODE_PATH:$LOCAL_PATH
 
 ### aliases
 alias maant='cd ~/workspace/EMR\ v44x/ && ant -f build-development.xml && cd -'
 alias maantclean='cd ~/workspace/EMR\ v44x/ && ant -f build-development.xml clean && cd -'
 alias maantall='maantclean && maant'
+alias maanttest='cd ~/workspace/EMR\ v44x/ && ant -f build-rob.xml && cd -'
+alias ax01='ssh -p 404 robm@ax01.med-access.net'
