@@ -10,4 +10,5 @@ jsp=.jsp,.jspf
 tld=.tld
 --ignore-dir=build
 --ignore-dir=emr-build
+--ignore-dir=tools
 --nosql
