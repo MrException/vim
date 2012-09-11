@@ -2,7 +2,10 @@
 #exec ratpoison
 #exec stumpwm
 
-if [[ $1 == "lxde" ]]
+if [[ $1 == "gnome" ]]
+then
+  exec ck-launch-session gnome-session
+elif [[ $1 == "lxde" ]]
 then
   exec lxsession
 elif [[ $1 == "xmonad" ]]
