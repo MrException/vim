@@ -45,7 +45,7 @@ export NODE_PATH=/home/rob/local/jsctags/lib/jsctags/:$NODE_PATH
 export EDITOR="vim"
 
 #initialize keychain
-keychain github
+#keychain github
 
 # source the keychain file for SSH keys
 if [ -z "$HOSTNAME" ]; then
