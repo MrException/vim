@@ -1,8 +1,12 @@
-" vim: set foldmethod=marker:
-"=====================General Options====================="{{{
-" break backwards vi compatibility so vim features work
-set nocompatible
+" vim: set foldmethod=marker sw=2 ts=2:
 
+" very first things:
+"   break backwards vi compatibility so vim features work
+"   and remove all autocommands
+set nocompatible
+autocmd!
+
+"=====================General Options====================="{{{
 " Use plugins
 " Need to first disable filetype then turn on
 " pathogen, only after pathogen is working do
@@ -20,12 +24,15 @@ filetype plugin indent on
 " for arduino files
 "autocmd! BufNewFile,BufRead *.pde setlocal ft=arduino
 
-" and set this so the dictionary file will be used
-"set complete+=k
+" some options to set up text complete - mostly just the defaults
+" see: http://robots.thoughtbot.com/post/27041742805/vim-you-complete-me
+set complete=.,w,b,u,t,i
+set wildmode=longest,list:longest
+set completeopt=menu,preview
 
 " these options automatically save fold state and cursor state when closing and
 " leaving a buffer, so new open the folds and cursor are in the same position
-"set viewoptions="folds,cursor"
+set viewoptions="folds,options,cursor"
 "au BufWinLeave * silent! mkview
 "au BufWinEnter * silent! loadview
 
@@ -45,6 +52,8 @@ set backspace=eol,indent,start
 " and formatting will also shorten lines
 set textwidth=80
 set wrapmargin=80
+set wrap
+set sidescroll=1
 
 " keep lots of command history
 set history=1000
@@ -150,6 +159,16 @@ set winheight=999
 " when switching to a different buffer, if it's open in another window go to
 " that window, otherwise open it in the current window
 set switchbuf=useopen
+"}}}
+
+"=====================Windows options====================="{{{
+if has("win32")
+  "set shell=powershell.exe
+  "set shellcmdflag=/c\ powershell.exe\ -NoLogo\ -NoProfile\ -NonInteractive\ -ExecutionPolicy\ RemoteSigned
+  "set shellpipe=|
+  "set shellredir=>
+  let $TMP="C:/tmp"
+endif
 "}}}
 
 "=====================GUI options====================="{{{
@@ -456,6 +475,10 @@ nnoremap <silent> <Leader><leader> <c-^>
 "nmap <A-k> <C-w>k
 "nmap <A-l> <C-w>l
 "nmap <A-c> <C-w>c
+"
+" Increase and decrease window width
+:nmap <A-.> :vertical res +2<cr>
+:nmap <A-,> :vertical res -2<cr>
 
 " when a omni-complete popup is visible use C-j and C-k to go up and down
 " default map is C-p and C-n which is ok, leaving these here as examples
@@ -490,7 +513,12 @@ nnoremap <silent> <Leader>fp :silent! :call Preserve("normal vipgq")<CR>
 noremap <silent> <Leader>cc ,c<space>
 
 " mapping to copy from clipboard xclip program needed
-nnoremap <silent> <Leader>v :r ! xclip -o<CR>
+"nnoremap <silent> <Leader>v :r ! xclip -o<CR>
+
+" mapping to paste to the system clipboard
+nnoremap <silent> <Leader>v "*p
+vnoremap <silent> <Leader>c "*y
+nnoremap <silent> <Leader>c<CR> "*yy
 
 " run a test.sh script in the current directory
 nnoremap <silent> <A-T> :!./test.sh<CR>
@@ -501,10 +529,12 @@ nnoremap <silent> <Leader>gR :call ShowRoutes()<cr>
 nnoremap <silent> <Leader>gg :topleft 100 :split Gemfile<cr>
 
 " find directory of current file
-cnoremap <silent> %% <C-R>=expand('%:h').'/'<cr>
+"cnoremap <silent> %% <C-R>=expand('%:h').'/'<cr> "old way
+cabbr %% <C-R>=expand('%:p:h') . '/'<CR>
 
 " edit or view files in directory of current file
-nnoremap <silent> <Leader>e :edit %%
+"nnoremap <silent> <Leader>e :edit %% "old way
+nnoremap <Leader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
 
 " switching forward and backward between buffers
 nnoremap <silent> <Leader><Tab> :bn<cr>
@@ -534,6 +564,18 @@ nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
 " toggle display of quickfix, and location list
 nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c')<CR>
 nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
+
+nmap ]] ]m
+nmap [[ [m
+
+imap <c-n> <c-x><c-n>
+
+nmap <leader>fl :Utl<CR>
+
+nmap <leader>bl :Bufferlist<CR>
+
+nmap <c-c>p :call PushToMobileOrg()<cr>
+nmap <c-c>u :call PullFromMobileOrg()<cr>
 "}}}
 
 "=====================General Autocommands====================="{{{
@@ -640,6 +682,19 @@ nmap <leader>g :TagbarToggle<CR>
 "let g:tlist_clojure_settings='Lisp;f:function'
 " toggle taglist window
 "nnoremap <silent> <Leader>g :TlistToggle<CR>
+"
+let g:tagbar_type_xslt = {
+      \ 'ctagstype' : 'xslt',
+      \ 'kinds'     : [
+      \ 'n:templates (named)',
+      \ 'm:templates (matched)',
+      \ 'a:applied templates',
+      \ 'c:called templates',
+      \ 'f:functions',
+      \ 'p:parameters',
+      \ 'v:variables'
+      \ ]
+      \ }
 "}}}
 
 "=====================SuperTab settings====================="{{{
@@ -673,3 +728,23 @@ let g:EclimCssValidate = 0
 let g:EclimHtmlValidate = 0
 let g:EclimBrowser = "chromium"
 "}}}
+
+"=====================DBEXT settings====================="{{{
+let g:dbext_default_window_use_horiz = 0 "open split on right instead of bottom
+let g:dbext_default_profile_rob1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=rob1:host=devdb01.ma.net:port=3306"
+let g:dbext_default_profile_rob2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=rob2:host=devdb01.ma.net:port=3306"
+let g:dbext_default_profile = "rob1"
+let g:dbext_default_prompt_for_parameters = 0 "turn off the 'feature' where it prompts you for parameters
+"}}}
+
+"=====================VimOrgmode settings====================="{{{
+let g:agenda_dirs=["$HOME/Dropbox/org"]
+let g:agenda_files = split(glob("$HOME/Dropbox/org/*.org"),"\n")
+"}}}
+
+"=====================VimWiki settings====================="{{{
+let wiki_1 = {}
+let wiki_1.nested_syntaxes = {'xml': 'xml'}
+let wiki_1.path = '~/Dropbox/wiki/'
+
+let g:vimwiki_list = [wiki_1]
