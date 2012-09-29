@@ -1,0 +1,314 @@
+" vim: set foldmethod=marker:
+"=====================General Options====================="{{{
+" break backwards vi compatibility so vim features work
+set nocompatible
+
+" turn on syntax and plugins
+syntax on
+filetype plugin indent on
+
+" Use two characters for tabs and expand tabs to spaces
+set shiftwidth=2
+set tabstop=2
+set expandtab
+
+" backspace over these things works
+set backspace=eol,indent,start
+
+" set maximum text width to 80 character
+" will automatically break after 80 chars
+" and formatting will also shorten lines
+set textwidth=80
+set wrapmargin=80
+
+" keep lots of command history
+set history=1000
+
+" let h and l keys go to next line when they hit the end/beginning of line
+set whichwrap=b,s,h,l
+
+" set the search scan to wrap lines
+set wrapscan
+
+" make search start highlighting as you type the search pattern
+set incsearch
+
+" set the search scan so that it ignores case when the search is all lower
+" case but recognizes uppercase if it's specified
+set ignorecase
+set smartcase
+
+" set the forward slash to be the slash of note.  Backslashes suck
+set shellslash
+
+" disable all error bells
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+
+" make the command line one line high
+" change to get a taller command line
+set cmdheight=1
+
+" Make sure that unsaved buffers that are to be put in the background are
+" allowed to go in there (ie. the "must save first" error doesn't come up)
+set hidden
+
+" when using 'cw' and like commands, put a $ at the end instead of just
+" deleting it
+set cpoptions+=$
+
+" Set the status line the way i like it
+set statusline=%f\ %y\ %m\ %r\ %h\ %w\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\
+
+" always show status line
+set laststatus=2
+
+" Use C style smart indenting
+" apparently breaks some plugins
+"set cindent
+
+" Keep backup files around (files that end in ~)
+" and put backup files in ~/.vim/backups/
+" and .swp files in ~/.vim/swp/
+set backup
+set writebackup
+
+" turn on line numbering
+set nu
+
+" show the current command in the lower right corner
+set showcmd
+
+" show the current mode
+set showmode
+
+" hide mouse pointer while typing
+set mousehide
+
+" When the page starts to scroll, keep the cursor 8 lines from the top and 8
+" lines from the bottom
+set scrolloff=8
+
+" get rid of silly characters in seperators
+set fillchars=""
+
+" set tags so that it searches up the directory tree for a tags file not just in
+" the current directory
+set tags=tags;$HOME
+
+" set spellcheck options
+set spelllang=en
+
+" settings to make windows keep nice heights and widths
+set winwidth=84
+" We have to have a winheight bigger than we want to set winminheight. But if
+" we set winheight to be huge before winminheight, the winminheight set will
+" fail.
+set winheight=10
+set winminheight=10
+set winheight=999
+
+" when switching to a different buffer, if it's open in another window go to
+" that window, otherwise open it in the current window
+set switchbuf=useopen
+"}}}
+
+" Use syntax to decide where to fold
+set foldmethod=syntax
+" Add a 2 character column to give visual indication of folds
+set foldcolumn=2
+
+" these mappings will open and close folds or create new folds using spacebar
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
+vnoremap <Space> zf
+
+colorscheme desert
+
+let &t_Co=256
+let &t_AF="\e[38;5;%dm"
+let &t_AB="\e[48;5;%dm"
+
+"=====================Functions====================="
+" visually select text then use '~' to change case
+function! TwiddleCase(str)
+  if a:str ==# toupper(a:str)
+    let result = tolower(a:str)
+  elseif a:str ==# tolower(a:str)
+    let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
+  else
+    let result = toupper(a:str)
+  endif
+  return result
+endfunction
+vnoremap ~ ygv"=TwiddleCase(@")<CR>Pgv
+
+" preserve state, helper function
+function! Preserve(command)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  execute a:command
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
+function! DoPrettyXML()
+  " save the filetype so we can restore it later
+  let l:origft = &ft
+  set ft=
+  " delete the xml header if it exists. This will
+  " permit us to surround the document with fake tags
+  " without creating invalid xml.
+  1s/<?xml .*?>//e
+  " insert fake tags around the entire document.
+  " This will permit us to pretty-format excerpts of
+  " XML that may contain multiple top-level elements.
+  0put ='<PrettyXML>'
+  $put ='</PrettyXML>'
+  silent %!xmllint --format -
+  " xmllint will insert an <?xml?> header. it's easy enough to delete
+  " if you don't want it.
+  " delete the fake tags
+  2d
+  $d
+  " restore the 'normal' indentation, which is one extra level
+  " too deep due to the extra tags we wrapped around the document.
+  silent %<
+  " back to home
+  1
+  " restore the filetype
+  exe "set ft=" . l:origft
+endfunction
+command! PrettyXML call DoPrettyXML()
+
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<Tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+
+function! GetBufferList()
+  redir =>buflist
+  silent! ls
+  redir END
+  return buflist
+endfunction
+
+function! ToggleList(bufname, pfx)
+  let buflist = GetBufferList()
+  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+    if bufwinnr(bufnum) != -1
+      exec(a:pfx.'close')
+      return
+    endif
+  endfor
+  if a:pfx == 'l' && len(getloclist(0)) == 0
+      echohl ErrorMsg
+      echo "Location List is Empty."
+      return
+  endif
+  let winnr = winnr()
+  exec(a:pfx.'open')
+  if winnr() != winnr
+    wincmd p
+  endif
+endfunction
+
+"=====================Key Mappings====================="
+" make <C-c> act like <ESC>
+noremap <silent> <C-c> <ESC>
+
+" always typing :W when I mean :w"
+command! W :w
+
+" make Y yank to end of line
+nnoremap Y y$
+
+" change the <Leader> character to ','
+let mapleader = ','
+
+" Edit and source the vimrc file
+nnoremap <silent> <Leader>ev :e $MYVIMRC<CR>
+nnoremap <silent> <Leader>sv :so $MYVIMRC<CR>
+
+" map arrow keys to nothing so I don't use them anymore! learn the hard way
+noremap <Left>  :echo "no!"<cr>
+noremap <Right> :echo "no!"<cr>
+noremap <Up>    :echo "no!"<cr>
+noremap <Down>  :echo "no!"<cr>
+"nmap <Left>  h
+"nmap <Right> l
+"nmap <Up>    k
+"nmap <Down>  j
+
+" change j and k so that when the line is really long and it wraps they will
+" work as expected
+nnoremap j gj
+nnoremap k gk
+
+" map J and K to go 10 lines up or down
+nnoremap <silent> <C-j> 10j
+nnoremap <silent> <C-k> 10k
+
+" beginning and end of line
+noremap <silent> <C-h> ^
+noremap <silent> <C-l> $
+
+" switch to last used buffer
+nnoremap <silent> <Leader><leader> <c-^>
+
+"This toggles the highlighting of searches - hit return in normal mode
+nnoremap <silent> <CR> :set hlsearch!<CR>
+
+" using tags, when over a word type alt-] to open the tag in a virtical split
+nnoremap <silent> <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+" map ,ss to spellcheck
+nnoremap <silent> <Leader>ss :set spell!<CR>
+
+" change directory to that of current file
+nnoremap <silent> <Leader>cd :cd%:p:h<cr>
+
+" clean up a file: (in this order)
+" -remove \r (^M) characters
+" -remove trailing white space
+" -turn tabs into spaces
+nnoremap <silent> <Leader>rs :silent! :call Preserve("%s/\r//g\|%s/\\s\\+$//e\|:retab")<CR>
+
+" fix tab formatting of buffer
+nnoremap <silent> <Leader>ff :silent! :call Preserve("normal gg=G")<CR>
+
+" fix formatting of paragraph block: line length and tabs
+nnoremap <silent> <Leader>fp :silent! :call Preserve("normal vipgq")<CR>
+
+" run a test.sh script in the current directory
+nnoremap <silent> <A-T> :!./test.sh<CR>
+
+" find directory of current file
+cnoremap <silent> %% <C-R>=expand('%:h').'/'<cr>
+
+" edit or view files in directory of current file
+nnoremap <silent> <Leader>e :edit %%
+
+" switching forward and backward between buffers
+nnoremap <silent> <Leader><Tab> :bn<cr>
+nnoremap <silent> <Leader><S-Tab> :bp<cr>
+
+" smart tab completion
+"inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+"inoremap <s-tab> <c-n>
+
+" Insert a hash rocket with <c-l>
+inoremap <c-l> <space>=><space>
+
+" toggle display of quickfix, and location list
+nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c')<CR>
+nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
