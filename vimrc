@@ -423,6 +423,16 @@ function! ToggleList(bufname, pfx)
     wincmd p
   endif
 endfunction
+
+function! ToggleScratch()
+  if expand('%') == g:ScratchBufferName
+    quit
+  else
+    Scratch
+  endif
+endfunction
+
+map <leader>s :call ToggleScratch()<CR>
 "}}}
 
 "=====================Key Mappings====================="{{{
