@@ -1,0 +1,22 @@
+--langdef=js
+--langmap=js:.js
+--regex-js=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*new[ \t]+Object\(/\1/o,object/
+--regex-js=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*\{/\1/o,object/
+--regex-js=/([A-Za-z0-9._$()]+)[ \t]*[:=][ \t]*function[ \t]*\(/\1/f,function/
+--regex-js=/function[ \t]+([A-Za-z0-9._$]+)[ \t]*\([^\]\)]*\)/\1/f,function/
+--regex-js=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*new[ \t]+Array\(/\1/a,array/
+--regex-js=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*\[/\1/a,array/
+--regex-js=/([^= ]+)[ \t]*=[ \t]*[^""]'[^'']*/\1/s,string/
+--regex-js=/([^= ]+)[ \t]*=[ \t]*[^'']"[^""]*/\1/s,string/
+--regex-js=/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*.+([,;=]|$)/\5/v,variable/
+--regex-js=/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*[ \t]*([,;]|$)/\5/v,variable/
+
+--langdef=xslt
+--langmap=xslt:.xsl
+--regex-xslt=/<xsl:template[^>]+name=\"([-a-zA-Z0-9_:]+)\"( +mode="([^"]+)")?/\1 \2/n,namedtemplate/i
+--regex-xslt=/<xsl:template[^>]+match=\"([^"]+)\"( +mode="([^"]+)")?/\1     \2/m,matchedtemplate/i
+--regex-xslt=/<xsl:apply-templates +select="([^"]{2,})"( +mode="([^"]+)")?/\1 \2/a,applytemplate/i
+--regex-xslt=/<xsl:call-template +select="([^"]+)"( +mode="([^"]+)")?/\1 \2/c,calltemplate/i
+--regex-xslt=/<xsl:variable[^>]+name=\"([-a-zA-Z0-9_]+)\"/\1/v,variable/i
+--regex-xslt=/<xsl:function[^>]+name=\"([-a-zA-Z0-9_:]+)\"/\1/f,function/i
+--regex-xslt=/<xsl:param[^>]+name=\"([-a-zA-Z0-9_:]+)\"/\1/p,parameter/i
