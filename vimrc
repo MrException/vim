@@ -202,6 +202,8 @@ set cursorline
 set foldmethod=syntax
 " Add a 2 character column to give visual indication of folds
 set foldcolumn=2
+" make all folds open by default using a high setting shere
+set foldlevel=20
 
 " these mappings will open and close folds or create new folds using spacebar
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
