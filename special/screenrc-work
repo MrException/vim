@@ -31,12 +31,10 @@
 # ===============================================================
 # Uncomment one/some following lines to automatically let
 # SCREEN start some programs in the given window numbers:
-screen -t VIM    0 zsh
-screen -t REPL	    1 zsh
-screen -t ZSH	    2 zsh
-#screen -t SUDO	    2 bash
-#screen -t finch    2 finch
-#screen -t doneyet   3 doneyet
+screen -t ACK    0 zsh
+screen -t DEVEMR    1 zsh
+screen -t DB	    2 zsh
+screen -t zsh	    2 zsh
 #
 # ===============================================================
 # VARIABLES - Boolean values (on/off)
