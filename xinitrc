@@ -5,6 +5,9 @@
 if [[ $1 == "gnome" ]]
 then
   exec ck-launch-session gnome-session
+elif [[ $1 == "mate" ]]
+then
+  exec ck-launch-session mate-session
 elif [[ $1 == "lxde" ]]
 then
   exec lxsession
