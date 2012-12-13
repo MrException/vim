@@ -70,7 +70,7 @@ set laststatus=2
 " Keep backup files around (files that end in ~)
 " and put backup files in ~/.vim/backups/
 " and .swp files in ~/.vim/swp/
-set backup
+set nobackup
 set writebackup
 
 " turn on line numbering
