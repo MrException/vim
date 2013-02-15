@@ -536,9 +536,9 @@ nnoremap <silent> <Leader>c<CR> "*yy
 nnoremap <silent> <A-T> :!./test.sh<CR>
 
 " open rails 'special' files in top window
-nnoremap <silent> <Leader>gr :topleft :split config/routes.rb<cr>
-nnoremap <silent> <Leader>gR :call ShowRoutes()<cr>
-nnoremap <silent> <Leader>gg :topleft 100 :split Gemfile<cr>
+" nnoremap <silent> <Leader>gr :topleft :split config/routes.rb<cr>
+" nnoremap <silent> <Leader>gR :call ShowRoutes()<cr>
+" nnoremap <silent> <Leader>gg :topleft 100 :split Gemfile<cr>
 
 " find directory of current file
 "cnoremap <silent> %% <C-R>=expand('%:h').'/'<cr> "old way
@@ -671,6 +671,12 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_depth = 100
 let g:ctrlp_max_files = 100000
 let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*'
+
+map <leader>gc :CtrlP app/collections<cr>
+map <leader>gm :CtrlP app/models<cr>
+map <leader>gr :CtrlP app/routers<cr>
+map <leader>gv :CtrlP app/views<cr>
+map <leader>gt :CtrlP test/spec<cr>
 "}}}
 
 "=====================NerdTree settings====================="{{{
