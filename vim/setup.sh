@@ -28,20 +28,17 @@ mkdir bundle
 
 cd bundle
 
-# possibilities
-# git clone https://github.com/chrisbra/NrrwRgn.git
-# git clone http://github.com/scrooloose/nerdcommenter.git
-
 # now git
 git clone http://github.com/tpope/vim-commentary.git
 git clone http://github.com/tpope/vim-repeat.git
 git clone http://github.com/tpope/vim-endwise.git
 git clone http://github.com/tpope/vim-rails.git
 git clone http://github.com/tpope/vim-surround.git
+git clone http://github.com/tpope/vim-fugitive.git
 git clone http://github.com/scrooloose/nerdtree.git
 git clone http://github.com/scrooloose/syntastic.git
 git clone http://github.com/mattn/zencoding-vim.git
-git clone http://github.com/majutsushi/tagbar
+git clone http://github.com/majutsushi/tagbar.git
 git clone http://github.com/kien/ctrlp.vim.git
 git clone http://github.com/mileszs/ack.vim.git
 git clone http://github.com/michaeljsmith/vim-indent-object.git
@@ -50,10 +47,13 @@ git clone http://github.com/vim-scripts/ZoomWin.git
 git clone http://github.com/vim-scripts/matchit.zip.git
 git clone http://github.com/godlygeek/tabular.git
 git clone http://github.com/chrisbra/csv.vim.git
-git clone http://github.com/duff/vim-scratch.git
 git clone http://github.com/vim-scripts/vimwiki.git
 
 git clone http://github.com/ervandew/supertab.git
+
+# faster movement
+git clone http://github.com/Lokaltog/vim-easymotion.git
+git clone http://github.com/goldfeld/vim-seek.git
 
 # snipmate and deps
 git clone http://github.com/tomtom/tlib_vim.git
@@ -61,13 +61,12 @@ git clone http://github.com/MarcWeber/vim-addon-mw-utils.git
 git clone http://github.com/garbas/vim-snipmate.git
 #git clone http://github.com/honza/snipmate-snippets
 
-git clone http://github.com/tpope/vim-fugitive.git
 git clone http://github.com/vim-scripts/dbext.vim.git
 
 # Plugins to autoclose brackets and what not
 #git clone http://github.com/vim-scripts/AutoClose.git
-#git clone http://github.com/Raimondi/delimitMate.git
-git clone http://github.com/kana/vim-smartinput.git
+git clone http://github.com/Raimondi/delimitMate.git
+#git clone http://github.com/kana/vim-smartinput.git
 
 # syntax highlighting, formatting, etc.
 git clone http://github.com/vim-ruby/vim-ruby.git
@@ -84,6 +83,13 @@ git clone http://github.com/vim-scripts/nxc.vim.git
 # No longer used plugins
 # that I may use again
 ##############
+
+# possibilities
+# git clone https://github.com/chrisbra/NrrwRgn.git
+# git clone http://github.com/scrooloose/nerdcommenter.git
+
+# open a scratch buffer, just use :enew now
+# git clone http://github.com/duff/vim-scratch.git
 
 # possible alternative to snipmate?
 #git clone http://github.com/SirVer/ultisnips.git
