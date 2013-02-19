@@ -39,9 +39,15 @@ set viewoptions="folds,options,cursor"
 " enable syntax highlighting for jquery javascript
 au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
-" Use four characters for tabs and expand tabs to spaces
-set shiftwidth=2
-set tabstop=2
+" Set number of spaces for tabs
+if has("win32")
+  "use 4 spaces at work
+  set shiftwidth=4
+  set tabstop=4
+else
+  set shiftwidth=2
+  set tabstop=2
+endif
 set expandtab
 
 " backspace over these things works
@@ -97,9 +103,9 @@ set statusline=%f\ %y\ %m\ %r\ %h\ %w\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\
 "set statusline+=Ruby:
 "set statusline+=%{rvm#statusline()}
 " these new three lines show syntax errors in the status line using syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 " always show status line
 set laststatus=2
@@ -113,8 +119,13 @@ set laststatus=2
 " and .swp files in ~/.vim/swp/
 set backup
 set writebackup
-set backupdir=~/.vim/backups/
-set directory=~/.vim/swp/
+if has("win32")
+  set backupdir=~/vimfiles/backups/
+  set directory=~/vimfiles/swp/
+else
+  set backupdir=~/.vim/backups/
+  set directory=~/.vim/swp/
+endif
 
 " turn on line numbering
 set nu
@@ -182,8 +193,11 @@ set guioptions-=L
 set guioptions-=m
 
 " set the font to something nice
-set guifont=Inconsolata\ Medium\ 12
-"set guifont=Inconsolata:h12
+if has("win32")
+  set guifont=Inconsolata:h12
+else
+  set guifont=Inconsolata\ Medium\ 18
+endif
 
 " Set up the gui cursor to look nice
 set guicursor=n-v-c:block-Cursor-blinkon0
@@ -199,7 +213,7 @@ set cursorline
 
 "=====================Folding options====================="{{{
 " Use markers to decide where to fold
-set foldmethod=syntax
+set foldmethod=manual
 " Add a 2 character column to give visual indication of folds
 set foldcolumn=2
 " make all folds open by default using a high setting shere
@@ -426,15 +440,6 @@ function! ToggleList(bufname, pfx)
   endif
 endfunction
 
-function! ToggleScratch()
-  if expand('%') == g:ScratchBufferName
-    quit
-  else
-    Scratch
-  endif
-endfunction
-
-map <leader>s :call ToggleScratch()<CR>
 "}}}
 
 "=====================Key Mappings====================="{{{
@@ -487,7 +492,7 @@ nnoremap <silent> <Leader><leader> <c-^>
 "nmap <A-k> <C-w>k
 "nmap <A-l> <C-w>l
 "nmap <A-c> <C-w>c
-"
+
 " Increase and decrease window width
 :nmap <A-.> :vertical res +2<cr>
 :nmap <A-,> :vertical res -2<cr>
@@ -602,9 +607,11 @@ augroup vimrcEx
     \ endif 
 
   "autocmd VimEnter * unmap! <Tab>
+  
+  " set a nice title for the vim window
+  autocmd BufEnter * let &titlestring = "VIM | " . expand("%:t") . " |"
 augroup END
 
-autocmd BufEnter * let &titlestring = "VIM | " . expand("%:t") . " |"
 "}}}
 
 "=====================Clojure Setup====================="{{{
@@ -648,11 +655,11 @@ augroup END
 
 "=====================LaTeX stuff====================="{{{
 " set latexmk options
-augroup mylatex
-  autocmd!
-  autocmd mylatex BufEnter *.tex let b:LatexBox_latexmk_options = "-pvc -pdfps"
-  autocmd mylatex BufEnter *.tex let b:delimitMate_matchpairs = "(:),[:],{:},<:>,$:$"
-augroup END
+"augroup mylatex
+"  autocmd!
+"  autocmd mylatex BufEnter *.tex let b:LatexBox_latexmk_options = "-pvc -pdfps"
+"  autocmd mylatex BufEnter *.tex let b:delimitMate_matchpairs = "(:),[:],{:},<:>,$:$"
+"augroup END
 "}}}
 
 "=====================MiniBufExplorer settings====================="{{{
@@ -687,20 +694,10 @@ let g:NERDTreeShowBookmarks=1
 nnoremap <silent> <Leader>d :NERDTreeToggle<CR>
 "}}}
 
-"=====================Tagbar settings====================="{{{
-nmap <leader>g :TagbarToggle<CR>
-"settings from when I used taglist
-"let g:Tlist_Use_Right_Window=1
-"let g:Tlist_Auto_Open=0
-"let g:Tlist_Enable_Fold_Column=0
-"let g:Tlist_Compact_Format=0
-"let g:Tlist_WinWidth=28
-"let g:Tlist_Exit_OnlyWindow=1
-"let g:Tlist_File_Fold_Auto_Close=1
-"let g:tlist_clojure_settings='Lisp;f:function'
+"=====================TagBar settings====================="{{{
 " toggle taglist window
-"nnoremap <silent> <Leader>g :TlistToggle<CR>
-"
+nnoremap <silent> <Leader>g :TagbarToggle<CR>
+
 let g:tagbar_type_xslt = {
       \ 'ctagstype' : 'xslt',
       \ 'kinds'     : [
@@ -730,7 +727,7 @@ nnoremap <C-S-e> :Errors<CR>
 "}}}
 
 "=====================SnipMate settings====================="{{{
-let g:snips_author = 'Robert McBride'
+let g:snips_author = "Robert McBride"
 let g:snips_trigger_key = "<tab>"
 let g:snipMate = {}
 let g:snipMate.scope_aliases = {} 
@@ -749,9 +746,12 @@ let g:EclimBrowser = "chromium"
 
 "=====================DBEXT settings====================="{{{
 let g:dbext_default_window_use_horiz = 0 "open split on right instead of bottom
-let g:dbext_default_profile_rob1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=rob1:host=devdb01.ma.net:port=3306"
-let g:dbext_default_profile_rob2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=rob2:host=devdb01.ma.net:port=3306"
-let g:dbext_default_profile = "rob1"
+let g:dbext_default_profile_robm1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm1:host=devdb01.ma.net:port=3306"
+let g:dbext_default_profile_robm2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm2:host=devdb01.ma.net:port=3306"
+let g:dbext_default_profile_site14 = "type=MYSQL:user=medaccess:passwd=madb:dbname=site14:host=devdb01.ma.net:port=3306"
+let g:dbext_default_profile_robclients43 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robclients43:host=devdb01.ma.net:port=3306"
+let g:dbext_default_profile_emrnl = "type=MYSQL:user=medaccess:passwd=madb:dbname=emrnl:host=devdb01.ma.net:port=3306"
+"let g:dbext_default_profile = "rob1"
 let g:dbext_default_prompt_for_parameters = 0 "turn off the 'feature' where it prompts you for parameters
 "}}}
 
@@ -766,3 +766,9 @@ let wiki_1.nested_syntaxes = {'xml': 'xml'}
 let wiki_1.path = '~/Dropbox/wiki/'
 
 let g:vimwiki_list = [wiki_1]
+"}}}
+
+"=====================DelimitMate settings====================="{{{
+let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 1
+"}}}
