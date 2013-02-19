@@ -225,14 +225,13 @@ vnoremap <Space> zf
 "}}}
 
 "=====================Color Related Things====================="{{{
-"colorscheme zenburn
 "colorscheme mayansmoke "a nice light scheme
 if has("gui_running")
   colorscheme Tomorrow-Night-Eighties
   "colorscheme neverland
 else
-  "colorscheme Tomorrow-Night-Eighties
-  colorscheme zenburn
+  colorscheme Tomorrow-Night-Eighties
+  "colorscheme zenburn
 endif
 
 " set t_Co so colors look better
