@@ -48,6 +48,7 @@ git clone http://github.com/vim-scripts/matchit.zip.git
 git clone http://github.com/godlygeek/tabular.git
 git clone http://github.com/chrisbra/csv.vim.git
 git clone http://github.com/vim-scripts/vimwiki.git
+git clone http://github.com/Lokaltog/powerline.git
 
 git clone http://github.com/ervandew/supertab.git
 

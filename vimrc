@@ -678,6 +678,7 @@ let g:ctrlp_max_depth = 100
 let g:ctrlp_max_files = 100000
 let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*'
 
+map <leader>b :CtrlPBuffer<cr>
 map <leader>gc :CtrlP app/collections<cr>
 map <leader>gm :CtrlP app/models<cr>
 map <leader>gr :CtrlP app/routers<cr>
