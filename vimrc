@@ -81,6 +81,9 @@ set smartcase
 " set the forward slash to be the slash of note.  Backslashes suck
 set shellslash
 
+" auto load files that have changed on the filesystem instead of prompting
+set autoread
+
 " disable all error bells
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
@@ -98,7 +101,7 @@ set hidden
 set cpoptions+=$
 
 " Set the status line the way i like it
-set statusline=%f\ %y\ %m\ %r\ %h\ %w\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\
+"set statusline=%f\ %y\ %m\ %r\ %h\ %w\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\
 " this adds rvm info to status line"
 "set statusline+=Ruby:
 "set statusline+=%{rvm#statusline()}
@@ -138,6 +141,15 @@ set showmode
 
 " hide mouse pointer while typing
 set mousehide
+
+" enable mouse usage in terminal vim, good for moving splits
+set mouse=a
+
+" supposed to fix tmux mouse usage
+set ttymouse=xterm2
+
+" faster rendering in console
+set ttyfast
 
 " grep will sometimes skip displaying the file name if you
 " search in a singe file. This will confuse Latex-Suite. Set your grep
@@ -179,6 +191,7 @@ if has("win32")
   "set shellpipe=|
   "set shellredir=>
   let $TMP="C:/tmp"
+  set wak=no " attempt to fix using ALT in mapping
 endif
 "}}}
 
@@ -191,6 +204,9 @@ set guioptions-=r
 set guioptions-=L
 " get rid of menu
 set guioptions-=m
+
+" make utf-8 work
+set encoding=utf-8
 
 " set the font to something nice
 if has("win32")
@@ -448,6 +464,9 @@ noremap <silent> <C-c> <ESC>
 " always typing :W when I mean :w"
 command! W :w
 
+" save with ctrl-s
+nmap <c-s> :w<cr>
+
 " make Y yank to end of line
 nnoremap Y y$
 
@@ -482,7 +501,7 @@ noremap <silent> <C-h> ^
 noremap <silent> <C-l> $
 
 " switch to last used buffer
-nnoremap <silent> <Leader><leader> <c-^>
+nnoremap <silent> <space><space> <c-^>
 
 " Easy window navigation
 " Don't really use these anymore
@@ -569,7 +588,7 @@ nnoremap <silent> <Leader>A :call RunTests('')<cr>
 "inoremap <s-tab> <c-n>
 
 " close the current buffer, and close the current window
-nnoremap <silent> <Leader>bd :BD<cr>\|<C-w>c
+"nnoremap <silent> <Leader>bd :BD<cr>\|<C-w>c
 
 " Insert a hash rocket with <c-l>
 inoremap <c-l> <space>=><space>
@@ -589,9 +608,6 @@ imap <c-n> <c-x><c-n>
 nmap <leader>fl :Utl<CR>
 
 nmap <leader>bl :Bufferlist<CR>
-
-nmap <c-c>p :call PushToMobileOrg()<cr>
-nmap <c-c>u :call PullFromMobileOrg()<cr>
 "}}}
 
 "=====================General Autocommands====================="{{{
@@ -679,6 +695,7 @@ let g:ctrlp_max_files = 100000
 let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*'
 
 map <leader>b :CtrlPBuffer<cr>
+map <leader>gf :CtrlP<cr><C-\>w
 map <leader>gc :CtrlP app/collections<cr>
 map <leader>gm :CtrlP app/models<cr>
 map <leader>gr :CtrlP app/routers<cr>
@@ -742,6 +759,8 @@ let g:user_zen_leader_key = '<c-y>'
 let g:EclimCssValidate = 0
 let g:EclimHtmlValidate = 0
 let g:EclimBrowser = "chromium"
+nmap <silent> <c-x> :call eclim#vimplugin#FeedKeys('Ctrl+Alt+x')<cr>
+nmap <silent> <c-m> :call eclim#vimplugin#FeedKeys('Ctrl+M')<cr>
 "}}}
 
 "=====================DBEXT settings====================="{{{
@@ -771,4 +790,8 @@ let g:vimwiki_list = [wiki_1]
 "=====================DelimitMate settings====================="{{{
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
+"}}}
+
+"=====================Powerline settings====================="{{{
+let g:Powerline_symbols = 'fancy'
 "}}}
