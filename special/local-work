@@ -5,7 +5,7 @@ export NODE_PATH="/cygdrive/c/Program Files (x86)/nodejs:/cygdrive/c/Users/rober
 
 LOCAL_PATH=$JAVA_HOME/bin:$ANT_HOME/bin
 
-export PATH=$SYS_PATH:$USER_PATH:$NODE_PATH:$LOCAL_PATH
+export PATH=$LOCAL_PATH:$SYS_PATH:$USER_PATH:$NODE_PATH
 
 ### aliases
 alias maant='cd ~/workspace/EMR\ v44x/ && ant -f build-development.xml && cd -'
