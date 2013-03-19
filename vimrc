@@ -3,8 +3,10 @@
 " very first things:
 "   break backwards vi compatibility so vim features work
 "   and remove all autocommands
+"   and make the vim folder be ~/.vim - windows default is ~/vimfiles
 set nocompatible
 autocmd!
+set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 
 "=====================General Options====================="{{{
 " Use plugins
@@ -28,7 +30,7 @@ filetype plugin indent on
 " see: http://robots.thoughtbot.com/post/27041742805/vim-you-complete-me
 set complete=.,w,b,u,t,i
 set wildmode=longest,list:longest
-set completeopt=menu,preview
+set completeopt=menu
 
 " these options automatically save fold state and cursor state when closing and
 " leaving a buffer, so new open the folds and cursor are in the same position
@@ -122,13 +124,8 @@ set laststatus=2
 " and .swp files in ~/.vim/swp/
 set backup
 set writebackup
-if has("win32")
-  set backupdir=~/vimfiles/backups/
-  set directory=~/vimfiles/swp/
-else
-  set backupdir=~/.vim/backups/
-  set directory=~/.vim/swp/
-endif
+set backupdir=~/.vim/backups/
+set directory=~/.vim/swp/
 
 " turn on line numbering
 set nu
@@ -163,9 +160,8 @@ set scrolloff=8
 " get rid of silly characters in seperators
 set fillchars=""
 
-" set tags so that it searches up the directory tree for a tags file not just in
-" the current directory
-set tags=tags;$HOME
+" set tags so that it searches in the current directory for the tags file
+set tags=tags
 
 " set spellcheck options
 set spelllang=en
@@ -212,7 +208,7 @@ set encoding=utf-8
 if has("win32")
   set guifont=Inconsolata:h12
 else
-  set guifont=Inconsolata\ Medium\ 18
+  set guifont=Inconsolata\ Medium\ 12
 endif
 
 " Set up the gui cursor to look nice
@@ -242,12 +238,17 @@ vnoremap <Space> zf
 
 "=====================Color Related Things====================="{{{
 "colorscheme mayansmoke "a nice light scheme
+set background=dark
 if has("gui_running")
-  colorscheme Tomorrow-Night-Eighties
+  "colorscheme rob
+  "colorscheme Tomorrow-Night-Eighties
   "colorscheme neverland
+  colorscheme solarized
 else
-  colorscheme Tomorrow-Night-Eighties
+  "colorscheme rob
+  "colorscheme Tomorrow-Night-Eighties
   "colorscheme zenburn
+  colorscheme solarized
 endif
 
 " set t_Co so colors look better
@@ -258,12 +259,59 @@ endif
 "if &term =~ '^\(xterm\|screen\)$'
 "set t_Co=256
 "endif
-let &t_Co=256
-let &t_AF="\e[38;5;%dm"
-let &t_AB="\e[48;5;%dm"
+"let &t_Co=256
+"let &t_AF="\e[38;5;%dm"
+"let &t_AB="\e[48;5;%dm"
 "}}}
 
 "=====================Functions====================="{{{
+" HARD MODE, can only move using searches!
+function! HardModeOn()
+  nmap h :echo "HARD MODE"<cr>
+  nmap l :echo "HARD MODE"<cr>
+  nmap j :echo "HARD MODE"<cr>
+  nmap k :echo "HARD MODE"<cr>
+endfunction
+function! HardModeOff()
+  unmap h
+  unmap l
+  unmap j
+  unmap k
+  nmap j gj
+  nmap k gk
+endfunction
+
+"turn logging on, log goes to ~/.vim/log
+function! ToggleVerbose()
+  if !&verbose
+    set verbosefile=~/.vim/log
+    set verbose=15
+  else
+    set verbose=0
+    set verbosefile=
+  endif
+endfunction
+
+function! DelTagOfFile(file)
+  let fullpath = a:file
+  let cwd = getcwd()
+  let tagfilename = cwd . "/tags"
+  let f = substitute(fullpath, cwd . "/", "", "")
+  let f = escape(f, './')
+  let cmd = 'sed -i "/' . f . '/d" "' . tagfilename . '"'
+  let resp = system(cmd)
+endfunction
+
+function! UpdateTags()
+  let f = expand("%:p")
+  let cwd = getcwd()
+  let tagfilename = cwd . "/tags"
+  let cmd = 'ctags -a -f "' . tagfilename . '" "' . f . '"'
+  call DelTagOfFile(f)
+  let resp = system(cmd)
+endfunction
+autocmd BufWritePost *.java,*.js,*.xsl call UpdateTags()
+
 " visually select text then use '~' to change case
 function! TwiddleCase(str)
   if a:str ==# toupper(a:str)
@@ -532,6 +580,9 @@ nnoremap <silent> <Leader>ss :set spell!<CR>
 " change directory to that of current file
 nnoremap <silent> <Leader>cd :cd%:p:h<cr>
 
+" change directory to that of current file - but just for current window
+nnoremap <silent> <Leader>lcd :lcd%:p:h<cr>
+
 " clean up a file: (in this order)
 " -remove \r (^M) characters
 " -remove trailing white space
@@ -539,10 +590,10 @@ nnoremap <silent> <Leader>cd :cd%:p:h<cr>
 nnoremap <silent> <Leader>rs :silent! :call Preserve("%s/\r//g\|%s/\\s\\+$//e\|:retab")<CR>
 
 " fix tab formatting of buffer
-nnoremap <silent> <Leader>ff :silent! :call Preserve("normal gg=G")<CR>
+nnoremap <silent> <Leader>FF :silent! :call Preserve("normal gg=G")<CR>
 
 " fix formatting of paragraph block: line length and tabs
-nnoremap <silent> <Leader>fp :silent! :call Preserve("normal vipgq")<CR>
+nnoremap <silent> <Leader>FP :silent! :call Preserve("normal vipgq")<CR>
 
 " toggle comment status of selected lines using NERDCommenter
 noremap <silent> <Leader>cc ,c<space>
@@ -605,9 +656,9 @@ nmap [[ [m
 
 imap <c-n> <c-x><c-n>
 
-nmap <leader>fl :Utl<CR>
+"nmap <leader>fl :Utl<CR>
 
-nmap <leader>bl :Bufferlist<CR>
+"nmap <leader>bl :Bufferlist<CR>
 "}}}
 
 "=====================General Autocommands====================="{{{
@@ -694,13 +745,15 @@ let g:ctrlp_max_depth = 100
 let g:ctrlp_max_files = 100000
 let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*'
 
-map <leader>b :CtrlPBuffer<cr>
-map <leader>gf :CtrlP<cr><C-\>w
-map <leader>gc :CtrlP app/collections<cr>
-map <leader>gm :CtrlP app/models<cr>
-map <leader>gr :CtrlP app/routers<cr>
-map <leader>gv :CtrlP app/views<cr>
-map <leader>gt :CtrlP test/spec<cr>
+nmap <leader>b :CtrlPBuffer<cr>
+nmap <leader>gw :CtrlP<cr><C-\>w
+nmap <leader>gf vi""zy:CtrlP<cr><C-\>rz
+vmap <leader>gv "zy:CtrlP<cr><C-\>rz
+"nmap <leader>gc :CtrlP app/collections<cr>
+"nmap <leader>gm :CtrlP app/models<cr>
+"nmap <leader>gr :CtrlP app/routers<cr>
+"nmap <leader>gv :CtrlP app/views<cr>
+"nmap <leader>gt :CtrlP test/spec<cr>
 "}}}
 
 "=====================NerdTree settings====================="{{{
@@ -733,6 +786,7 @@ let g:tagbar_type_xslt = {
 let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
 let g:SuperTabMappingForward = "<c-space>"
 let g:SuperTabMappingBackward = "<s-c-space>"
+let g:SuperTabClosePreviewOnPopupClose = 1
 "}}}
 
 "=====================Syntastic settings====================="{{{
@@ -744,11 +798,22 @@ nnoremap <C-S-e> :Errors<CR>
 "}}}
 
 "=====================SnipMate settings====================="{{{
-let g:snips_author = "Robert McBride"
-let g:snips_trigger_key = "<tab>"
-let g:snipMate = {}
-let g:snipMate.scope_aliases = {} 
-let g:snipMate.scope_aliases['jsp'] = 'jsp,html'
+"let g:snips_author = "Robert McBride"
+"let g:snips_trigger_key = "<tab>"
+"let g:snipMate = {}
+"let g:snipMate.scope_aliases = {} 
+"let g:snipMate.scope_aliases['jsp'] = 'jsp,html'
+"}}}
+
+"=====================Ultisnip settings====================="{{{
+let g:UltiSnipsEditSplit = "horizontal"
+let g:UltiSnipsSnippetsDir = "~/.vim/snippets/"
+let g:UltiSnipsSnippetDirectories=["snippets","UltiSnips"]
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+map <leader>ue :UltiSnipsEdit<cr>
 "}}}
 
 "=====================ZenCoding settings====================="{{{
@@ -756,8 +821,11 @@ let g:user_zen_leader_key = '<c-y>'
 "}}}
 
 "=====================Eclim settings====================="{{{
+"turn off some validation, slows the editor down a lot
 let g:EclimCssValidate = 0
 let g:EclimHtmlValidate = 0
+let g:EclimXmlValidate = 0
+
 let g:EclimBrowser = "chromium"
 nmap <silent> <c-x> :call eclim#vimplugin#FeedKeys('Ctrl+Alt+x')<cr>
 nmap <silent> <c-m> :call eclim#vimplugin#FeedKeys('Ctrl+M')<cr>
@@ -775,16 +843,16 @@ let g:dbext_default_prompt_for_parameters = 0 "turn off the 'feature' where it p
 "}}}
 
 "=====================VimOrgmode settings====================="{{{
-let g:agenda_dirs=["$HOME/Dropbox/org"]
-let g:agenda_files = split(glob("$HOME/Dropbox/org/*.org"),"\n")
+"let g:agenda_dirs=["$HOME/Dropbox/org"]
+"let g:agenda_files = split(glob("$HOME/Dropbox/org/*.org"),"\n")
 "}}}
 
 "=====================VimWiki settings====================="{{{
-let wiki_1 = {}
-let wiki_1.nested_syntaxes = {'xml': 'xml'}
-let wiki_1.path = '~/Dropbox/wiki/'
+"let wiki_1 = {}
+"let wiki_1.nested_syntaxes = {'xml': 'xml'}
+"let wiki_1.path = '~/Dropbox/wiki/'
 
-let g:vimwiki_list = [wiki_1]
+"let g:vimwiki_list = [wiki_1]
 "}}}
 
 "=====================DelimitMate settings====================="{{{
@@ -793,5 +861,10 @@ let delimitMate_expand_space = 1
 "}}}
 
 "=====================Powerline settings====================="{{{
-let g:Powerline_symbols = 'fancy'
+"let g:Powerline_symbols = 'fancy'
+"}}}
+"
+"=====================BufKill settings====================="{{{
+let g:BufKillCreateMappings = 0 " don't create ,.. mapping
+let g:BufKillActionWhenModifiedFileToBeKilled = 'confirm' " if file contents have changed, ask if you want to save it
 "}}}
