@@ -574,6 +574,10 @@ nnoremap <silent> <CR> :set hlsearch!<CR>
 " using tags, when over a word type alt-] to open the tag in a virtical split
 nnoremap <silent> <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
+" using tags, when there is more than one matching tag, use ,n to go to next tag
+" and close the current window
+nmap <Leader>n :BD<cr> :tnext<cr>
+
 " map ,ss to spellcheck
 nnoremap <silent> <Leader>ss :set spell!<CR>
 
@@ -766,7 +770,7 @@ nnoremap <silent> <Leader>d :NERDTreeToggle<CR>
 
 "=====================TagBar settings====================="{{{
 " toggle taglist window
-nnoremap <silent> <Leader>g :TagbarToggle<CR>
+nnoremap <silent> <Leader>o :TagbarToggle<CR>
 
 let g:tagbar_type_xslt = {
       \ 'ctagstype' : 'xslt',
