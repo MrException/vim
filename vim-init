@@ -1,0 +1,2 @@
+let g:vimrc = "$HOME/.vim/vimrc"
+exec ":source " . g:vimrc

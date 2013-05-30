@@ -567,8 +567,8 @@ nnoremap Y y$
 let mapleader = ','
 
 " Edit and source the vimrc file
-nnoremap <silent> <Leader>ev :e $MYVIMRC<CR>
-nnoremap <silent> <Leader>sv :so $MYVIMRC<CR>
+nnoremap <silent> <Leader>ev :exec ":e " . g:vimrc<CR>
+nnoremap <silent> <Leader>sv :exec ":so " . g:vimrc<CR>
 
 " map arrow keys to nothing so I don't use them anymore! learn the hard way
 noremap <Left>  :echo "no!"<cr>
