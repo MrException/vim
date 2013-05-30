@@ -29,12 +29,14 @@ mkdir bundle
 cd bundle
 
 # now git
+git clone http://github.com/tpope/vim-dispatch.git
 #git clone http://github.com/tpope/vim-commentary.git
 git clone http://github.com/tpope/vim-repeat.git
 git clone http://github.com/tpope/vim-endwise.git
 #git clone http://github.com/tpope/vim-rails.git
 git clone http://github.com/tpope/vim-surround.git
 git clone http://github.com/tpope/vim-fugitive.git
+git clone http://github.com/tpope/vim-sleuth.git
 git clone http://github.com/scrooloose/nerdtree.git
 git clone http://github.com/scrooloose/syntastic.git
 git clone http://github.com/scrooloose/nerdcommenter.git
@@ -52,6 +54,7 @@ git clone http://github.com/Lokaltog/powerline.git
 git clone http://github.com/vim-scripts/closetag.vim.git
 git clone http://github.com/dbarsam/vim-bufkill.git
 git clone http://github.com/vim-scripts/YankRing.vim.git
+git clone http://github.com/terryma/vim-expand-region.git
 
 git clone http://github.com/ervandew/supertab.git
 
