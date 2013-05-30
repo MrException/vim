@@ -7,6 +7,7 @@
 set nocompatible
 autocmd!
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
+runtime bundle/vim-pathogen/autoload/pathogen.vim
 
 "=====================General Options====================="{{{
 call pathogen#infect()
