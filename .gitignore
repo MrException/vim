@@ -1,5 +1,4 @@
 autoload
-bundle
 vim-pathogen
 backups
 snipmate-snippets
