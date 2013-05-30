@@ -1,5 +1,4 @@
 autoload
-vim-pathogen
 backups
 snipmate-snippets
 .netrwhist
