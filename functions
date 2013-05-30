@@ -1,5 +1,0 @@
-#!/bin/bash
-
-tfix() {
-    chmod a+rw /dev/pts/$1
-}
