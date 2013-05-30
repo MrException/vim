@@ -9,16 +9,15 @@ autocmd!
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 
 "=====================General Options====================="{{{
-" Use plugins
-" Need to first disable filetype then turn on
-" pathogen, only after pathogen is working do
-" we re-enable filetype stuff
-"filetype off
-"call pathogen#runtime_append_all_bundles()
-"call pathogen#helptags()
 call pathogen#infect()
+"call pathogen#helptags() " comment out to speed things up
 syntax on
 filetype plugin indent on
+
+" force unix file format
+set fileformat=unix
+set fileformats=unix,dos
+"set nobinary
 
 " look for dictionary files specific to filetypes
 "au FileType * exec("setlocal dictionary+=".$HOME."/.vim/dictionaries/".expand('<amatch>'))
@@ -30,6 +29,7 @@ filetype plugin indent on
 " see: http://robots.thoughtbot.com/post/27041742805/vim-you-complete-me
 set complete=.,w,b,u,t,i
 set wildmode=longest,list:longest
+set wildmenu
 set completeopt=menu
 
 " these options automatically save fold state and cursor state when closing and
@@ -39,7 +39,8 @@ set viewoptions="folds,options,cursor"
 "au BufWinEnter * silent! loadview
 
 " enable syntax highlighting for jquery javascript
-au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+"au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+au BufRead,BufNewFile .jshintrc set ft=javascript
 
 " Set number of spaces for tabs
 if has("win32")
@@ -81,7 +82,7 @@ set ignorecase
 set smartcase
 
 " set the forward slash to be the slash of note.  Backslashes suck
-set shellslash
+"set shellslash " BUT THIS BREAKS SYNTASTIC
 
 " auto load files that have changed on the filesystem instead of prompting
 set autoread
@@ -265,6 +266,50 @@ endif
 "}}}
 
 "=====================Functions====================="{{{
+" pretty print json using python
+function! DoPrettyJSON()
+python << endpython
+import vim, json
+
+buf = vim.current.buffer
+js = json.loads("".join(buf))
+pretty = json.dumps(js, indent=2, separators=(',',': ')).split("\n")
+buf[:] = None # delete buffer contents
+buf.append(pretty)
+del buf[0] # append adds to the second line, so delete first blank line
+endpython
+endfunction
+command! PrettyJSON call DoPrettyJSON()
+
+function! DoPrettyXML()
+python << endpython
+import vim
+from bs4 import BeautifulSoup
+
+buf = vim.current.buffer
+xml = BeautifulSoup("".join(buf))
+pretty = xml.prettify("ascii").split("\n")
+del buf[:] # delete buffer contents
+buf.append(pretty)
+del buf[0] # append adds to the second line, so delete first blank line
+endpython
+endfunction
+command! PrettyXML call DoPrettyXML()
+
+function! DoWrapLineInNewBlock()
+python << endpython
+import vim
+
+buf = vim.current.buffer
+win = vim.current.window
+(row,col) = win.cursor
+buf.append("{",row-1);
+buf.append("}",row+1);
+vim.eval("feedkeys('=3j','n')")
+endpython
+endfunction
+command! WrapLineInNewBlock call DoWrapLineInNewBlock()
+
 " HARD MODE, can only move using searches!
 function! HardModeOn()
   nmap h :echo "HARD MODE"<cr>
@@ -297,18 +342,18 @@ function! DelTagOfFile(file)
   let cwd = getcwd()
   let tagfilename = cwd . "/tags"
   let f = substitute(fullpath, cwd . "/", "", "")
-  let f = escape(f, './')
-  let cmd = 'sed -i "/' . f . '/d" "' . tagfilename . '"'
-  let resp = system(cmd)
+  let cmd = 'Start! sed -i "./' . f . '/d" "' . tagfilename . '"'
+  exe cmd
 endfunction
 
 function! UpdateTags()
   let f = expand("%:p")
   let cwd = getcwd()
-  let tagfilename = cwd . "/tags"
-  let cmd = 'ctags -a -f "' . tagfilename . '" "' . f . '"'
+  let f = substitute(f, cwd . "/", "", "")
+  let tagfilename = "./tags"
+  let cmd = 'Start! ctags -a -f "' . tagfilename . '" "./' . f . '"'
   call DelTagOfFile(f)
-  let resp = system(cmd)
+  exe cmd
 endfunction
 autocmd BufWritePost *.java,*.js,*.xsl call UpdateTags()
 
@@ -658,6 +703,8 @@ nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 nmap ]] ]m
 nmap [[ [m
 
+nmap <leader>L :call DoWrapLineInNewBlock()<CR>
+
 imap <c-n> <c-x><c-n>
 
 "nmap <leader>fl :Utl<CR>
@@ -747,7 +794,12 @@ let g:ctrlp_map = "<leader>f"
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_depth = 100
 let g:ctrlp_max_files = 100000
-let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*'
+"let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*\|etc.*'
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v(\.git|\.svn|etc|build|node_modules)$',
+  \ 'file': '\v\.(exe|so|dll|jar|class)$',
+  \ }
 
 nmap <leader>b :CtrlPBuffer<cr>
 nmap <leader>gw :CtrlP<cr><C-\>w
@@ -787,7 +839,8 @@ let g:tagbar_type_xslt = {
 "}}}
 
 "=====================SuperTab settings====================="{{{
-let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-x><c-]>"
 let g:SuperTabMappingForward = "<c-space>"
 let g:SuperTabMappingBackward = "<s-c-space>"
 let g:SuperTabClosePreviewOnPopupClose = 1
@@ -796,6 +849,9 @@ let g:SuperTabClosePreviewOnPopupClose = 1
 "=====================Syntastic settings====================="{{{
 " turn on the little arrow that shows errors
 let g:syntastic_enable_signs=1
+let g:syntastic_check_on_open=1
+let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_jshint_conf = '.jshintrc'
 
 " open/update errors window created by syntastic
 nnoremap <C-S-e> :Errors<CR>
@@ -831,8 +887,9 @@ let g:EclimHtmlValidate = 0
 let g:EclimXmlValidate = 0
 
 let g:EclimBrowser = "chromium"
-nmap <silent> <c-x> :call eclim#vimplugin#FeedKeys('Ctrl+Alt+x')<cr>
-nmap <silent> <c-m> :call eclim#vimplugin#FeedKeys('Ctrl+M')<cr>
+" not working??
+"nmap <silent> <c-x> :call eclim#vimplugin#FeedKeys('Ctrl+Alt+x')<cr>
+"nmap <silent> <c-m> :call eclim#vimplugin#FeedKeys('Ctrl+M')<cr>
 "}}}
 
 "=====================DBEXT settings====================="{{{
