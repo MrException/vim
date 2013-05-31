@@ -12,12 +12,9 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 "=====================General Options====================="{{{
 call pathogen#infect()
 "call pathogen#helptags() " comment out to speed things up
-syntax on
-filetype plugin indent on
 
 " force unix file format
 set fileformat=unix
-set fileformats=unix,dos
 "set nobinary
 
 " look for dictionary files specific to filetypes
@@ -28,9 +25,7 @@ set fileformats=unix,dos
 
 " some options to set up text complete - mostly just the defaults
 " see: http://robots.thoughtbot.com/post/27041742805/vim-you-complete-me
-set complete=.,w,b,u,t,i
 set wildmode=longest,list:longest
-set wildmenu
 set completeopt=menu
 
 " these options automatically save fold state and cursor state when closing and
@@ -54,9 +49,6 @@ else
 endif
 set expandtab
 
-" backspace over these things works
-set backspace=eol,indent,start
-
 " set maximum text width to 80 character
 " will automatically break after 80 chars
 " and formatting will also shorten lines
@@ -65,17 +57,11 @@ set wrapmargin=80
 set wrap
 set sidescroll=1
 
-" keep lots of command history
-set history=1000
-
 " let h and l keys go to next line when they hit the end/beginning of line
 set whichwrap=b,s,h,l
 
 " set the search scan to wrap lines
 set wrapscan
-
-" make search start highlighting as you type the search pattern
-set incsearch
 
 " set the search scan so that it ignores case when the search is all lower
 " case but recognizes uppercase if it's specified
@@ -84,9 +70,6 @@ set smartcase
 
 " set the forward slash to be the slash of note.  Backslashes suck
 "set shellslash " BUT THIS BREAKS SYNTASTIC
-
-" auto load files that have changed on the filesystem instead of prompting
-set autoread
 
 " disable all error bells
 set noerrorbells visualbell t_vb=
@@ -114,9 +97,6 @@ set cpoptions+=$
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
 
-" always show status line
-set laststatus=2
-
 " Use C style smart indenting
 " apparently breaks some plugins
 "set cindent
@@ -126,14 +106,9 @@ set laststatus=2
 " and .swp files in ~/.vim/swp/
 set backup
 set writebackup
-set backupdir=~/.vim/backups/
-set directory=~/.vim/swp/
 
 " turn on line numbering
 set nu
-
-" show the current command in the lower right corner
-set showcmd
 
 " show the current mode
 set showmode
@@ -203,9 +178,6 @@ set guioptions-=L
 " get rid of menu
 set guioptions-=m
 
-" make utf-8 work
-set encoding=utf-8
-
 " set the font to something nice
 if has("win32")
   set guifont=Inconsolata:h12
@@ -242,28 +214,11 @@ vnoremap <Space> zf
 "colorscheme mayansmoke "a nice light scheme
 set background=dark
 if has("gui_running")
-  "colorscheme rob
-  "colorscheme Tomorrow-Night-Eighties
-  "colorscheme neverland
   colorscheme solarized
 else
-  "colorscheme rob
-  "colorscheme Tomorrow-Night-Eighties
-  "colorscheme zenburn
   colorscheme solarized
 endif
 
-" set t_Co so colors look better
-"if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
-"set t_Co=256
-"endif
-
-"if &term =~ '^\(xterm\|screen\)$'
-"set t_Co=256
-"endif
-"let &t_Co=256
-"let &t_AF="\e[38;5;%dm"
-"let &t_AB="\e[48;5;%dm"
 "}}}
 
 "=====================Functions====================="{{{
@@ -560,9 +515,6 @@ command! W :w
 
 " save with ctrl-s
 nmap <c-s> :w<cr>
-
-" make Y yank to end of line
-nnoremap Y y$
 
 " change the <Leader> character to ','
 let mapleader = ','
