@@ -1,5 +1,6 @@
+*~
 autoload
 backups
-snipmate-snippets
 .netrwhist
-swp
+*swp
+bundle
