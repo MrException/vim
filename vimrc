@@ -6,13 +6,50 @@
 "   and make the vim folder be ~/.vim - windows default is ~/vimfiles
 set nocompatible
 autocmd!
+
+"=====================Vundle====================="{{{
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
-runtime bundle/vim-pathogen/autoload/pathogen.vim
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'tpope/vim-sensible'
+
+Bundle 'Lokaltog/vim-easymotion.git'
+Bundle 'Lokaltog/vim-powerline.git'
+Bundle 'Raimondi/delimitMate'
+Bundle 'SirVer/ultisnips.git'
+Bundle 'altercation/vim-colors-solarized.git'
+Bundle 'dbarsam/vim-bufkill.git'
+Bundle 'docunext/closetag.vim.git'
+Bundle 'ervandew/supertab.git'
+Bundle 'gmarik/vundle.git'
+Bundle 'goldfeld/vim-seek.git'
+Bundle 'groenewege/vim-less'
+Bundle 'itspriddle/vim-jquery.git'
+Bundle 'kien/ctrlp.vim.git'
+Bundle 'majutsushi/tagbar.git'
+Bundle 'mattn/zencoding-vim.git'
+Bundle 'michaeljsmith/vim-indent-object.git'
+Bundle 'mileszs/ack.vim.git'
+Bundle 'pangloss/vim-javascript.git'
+Bundle 'scrooloose/nerdcommenter.git'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic.git'
+Bundle 'terryma/vim-expand-region.git'
+Bundle 'terryma/vim-multiple-cursors.git'
+Bundle 'tpope/vim-dispatch.git'
+Bundle 'tpope/vim-endwise.git'
+Bundle 'tpope/vim-fugitive.git'
+Bundle 'tpope/vim-repeat.git'
+Bundle 'tpope/vim-surround.git'
+Bundle 'vim-scripts/YankRing.vim.git'
+Bundle 'vim-scripts/ZoomWin.git'
+Bundle 'vim-scripts/dbext.vim.git'
+Bundle 'vim-scripts/matchit.zip.git'
+"}}}
 
 "=====================General Options====================="{{{
-call pathogen#infect()
-"call pathogen#helptags() " comment out to speed things up
-
 " force unix file format
 set fileformat=unix
 "set nobinary
