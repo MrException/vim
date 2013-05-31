@@ -16,7 +16,7 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-sensible'
 
 Bundle 'Lokaltog/vim-easymotion.git'
-Bundle 'Lokaltog/vim-powerline.git'
+"Bundle 'Lokaltog/vim-powerline.git'
 Bundle 'Raimondi/delimitMate'
 Bundle 'SirVer/ultisnips.git'
 Bundle 'altercation/vim-colors-solarized.git'
@@ -28,6 +28,7 @@ Bundle 'goldfeld/vim-seek.git'
 Bundle 'groenewege/vim-less'
 Bundle 'itspriddle/vim-jquery.git'
 Bundle 'kien/ctrlp.vim.git'
+Bundle 'maciakl/vim-neatstatus'
 Bundle 'majutsushi/tagbar.git'
 Bundle 'mattn/zencoding-vim.git'
 Bundle 'michaeljsmith/vim-indent-object.git'
@@ -259,6 +260,15 @@ endif
 "}}}
 
 "=====================Functions====================="{{{
+" toggle between relative and normal line numbers
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunction
+
 " pretty print json using python
 function! DoPrettyJSON()
 python << endpython
@@ -700,6 +710,8 @@ imap <c-n> <c-x><c-n>
 "nmap <leader>fl :Utl<CR>
 
 "nmap <leader>bl :Bufferlist<CR>
+
+nmap <a-n> :call NumberToggle()<cr>
 "}}}
 
 "=====================General Autocommands====================="{{{
@@ -719,6 +731,10 @@ augroup vimrcEx
   autocmd BufEnter * let &titlestring = "VIM | " . expand("%:t") . " |"
 augroup END
 
+autocmd FocusLost * :set number
+autocmd FocusGained * :set relativenumber
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
 "}}}
 
 "=====================Clojure Setup====================="{{{
