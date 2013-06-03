@@ -711,7 +711,7 @@ imap <c-n> <c-x><c-n>
 
 "nmap <leader>bl :Bufferlist<CR>
 
-nmap <a-n> :call NumberToggle()<cr>
+nmap <leader># :call NumberToggle()<cr>
 "}}}
 
 "=====================General Autocommands====================="{{{
@@ -879,6 +879,7 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsDontReverseSearchPath="1"
 map <leader>ue :UltiSnipsEdit<cr>
 "}}}
 
