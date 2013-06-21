@@ -23,14 +23,15 @@ Bundle 'altercation/vim-colors-solarized.git'
 Bundle 'dbarsam/vim-bufkill.git'
 Bundle 'docunext/closetag.vim.git'
 Bundle 'ervandew/supertab.git'
-Bundle 'gmarik/vundle.git'
 Bundle 'goldfeld/vim-seek.git'
 Bundle 'groenewege/vim-less'
 Bundle 'itspriddle/vim-jquery.git'
+Bundle 'kana/vim-altr.git'
 Bundle 'kien/ctrlp.vim.git'
 Bundle 'maciakl/vim-neatstatus'
 Bundle 'majutsushi/tagbar.git'
 Bundle 'mattn/zencoding-vim.git'
+Bundle 'maxbrunsfeld/vim-yankstack.git'
 Bundle 'michaeljsmith/vim-indent-object.git'
 Bundle 'mileszs/ack.vim.git'
 Bundle 'pangloss/vim-javascript.git'
@@ -44,7 +45,7 @@ Bundle 'tpope/vim-endwise.git'
 Bundle 'tpope/vim-fugitive.git'
 Bundle 'tpope/vim-repeat.git'
 Bundle 'tpope/vim-surround.git'
-Bundle 'vim-scripts/YankRing.vim.git'
+"Bundle 'vim-scripts/YankRing.vim.git'
 Bundle 'vim-scripts/ZoomWin.git'
 Bundle 'vim-scripts/dbext.vim.git'
 Bundle 'vim-scripts/matchit.zip.git'
@@ -417,35 +418,6 @@ function! GetClojureFold()
   endif
 endfunction
 
-function! DoPrettyXML()
-  " save the filetype so we can restore it later
-  let l:origft = &ft
-  set ft=
-  " delete the xml header if it exists. This will
-  " permit us to surround the document with fake tags
-  " without creating invalid xml.
-  1s/<?xml .*?>//e
-  " insert fake tags around the entire document.
-  " This will permit us to pretty-format excerpts of
-  " XML that may contain multiple top-level elements.
-  0put ='<PrettyXML>'
-  $put ='</PrettyXML>'
-  silent %!xmllint --format -
-  " xmllint will insert an <?xml?> header. it's easy enough to delete
-  " if you don't want it.
-  " delete the fake tags
-  2d
-  $d
-  " restore the 'normal' indentation, which is one extra level
-  " too deep due to the extra tags we wrapped around the document.
-  silent %<
-  " back to home
-  1
-  " restore the filetype
-  exe "set ft=" . l:origft
-endfunction
-command! PrettyXML call DoPrettyXML()
-
 " Following four functions are for running tests
 function! RunTests(filename)
   " Write the file and run tests for the given filename
@@ -785,15 +757,6 @@ augroup END
 "augroup END
 "}}}
 
-"=====================MiniBufExplorer settings====================="{{{
-"Not using minibufexpl anymore
-"let g:miniBufExplMapCTabSwitchBufs = 1
-"let g:miniBufExplMapWindowNavVim = 1
-"let g:miniBufExplModSelTarget = 1
-"let g:miniBufExplForceSyntaxEnable = 1
-"let g:miniBufExplorerMoreThanOne = 0
-"}}}
-
 "=====================CtrlP settings====================="{{{
 " Open files with ,f
 let g:ctrlp_map = "<leader>f"
@@ -823,7 +786,7 @@ let g:NERDTreeShowBookmarks=1
 " can't seem to get this next setting to work properly
 "let g:NERDTreeBookmarksFile='$HOME/.vim/NERDTreeBookmarks'
 
-nnoremap <silent> <Leader>d :NERDTreeToggle<CR>
+nmap <Leader>d :NERDTreeToggle<CR>
 "}}}
 
 "=====================TagBar settings====================="{{{
@@ -901,26 +864,11 @@ let g:EclimBrowser = "chromium"
 
 "=====================DBEXT settings====================="{{{
 let g:dbext_default_window_use_horiz = 0 "open split on right instead of bottom
-let g:dbext_default_profile_robm1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm1:host=devdb01.ma.net:port=3306"
-let g:dbext_default_profile_robm2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm2:host=devdb01.ma.net:port=3306"
-let g:dbext_default_profile_site14 = "type=MYSQL:user=medaccess:passwd=madb:dbname=site14:host=devdb01.ma.net:port=3306"
-let g:dbext_default_profile_robclients43 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robclients43:host=devdb01.ma.net:port=3306"
-let g:dbext_default_profile_emrnl = "type=MYSQL:user=medaccess:passwd=madb:dbname=emrnl:host=devdb01.ma.net:port=3306"
+let g:dbext_default_profile_robm1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm1:host=devdb02.ma.net:port=3301"
+let g:dbext_default_profile_robm2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm2:host=devdb02.ma.net:port=3301"
+let g:dbext_default_profile_robm3 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm3:host=devdb02.ma.net:port=3301"
 "let g:dbext_default_profile = "rob1"
 let g:dbext_default_prompt_for_parameters = 0 "turn off the 'feature' where it prompts you for parameters
-"}}}
-
-"=====================VimOrgmode settings====================="{{{
-"let g:agenda_dirs=["$HOME/Dropbox/org"]
-"let g:agenda_files = split(glob("$HOME/Dropbox/org/*.org"),"\n")
-"}}}
-
-"=====================VimWiki settings====================="{{{
-"let wiki_1 = {}
-"let wiki_1.nested_syntaxes = {'xml': 'xml'}
-"let wiki_1.path = '~/Dropbox/wiki/'
-
-"let g:vimwiki_list = [wiki_1]
 "}}}
 
 "=====================DelimitMate settings====================="{{{
@@ -928,11 +876,17 @@ let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 "}}}
 
-"=====================Powerline settings====================="{{{
-"let g:Powerline_symbols = 'fancy'
-"}}}
-"
 "=====================BufKill settings====================="{{{
 let g:BufKillCreateMappings = 0 " don't create ,.. mapping
 let g:BufKillActionWhenModifiedFileToBeKilled = 'confirm' " if file contents have changed, ask if you want to save it
+"}}}
+
+"=====================Altr settings====================="{{{
+call altr#remove_all()
+call altr#define('src/ui/*/%.js', 'MedAccess/web/WEB-INF/ui-test/unit/*/%.spec.js')
+nmap <F2> <Plug>(altr-forward)
+"}}}
+
+"=====================easymotion settings====================="{{{
+let g:EasyMotion_leader_key = '<Leader>'
 "}}}
