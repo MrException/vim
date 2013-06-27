@@ -404,37 +404,6 @@ function! Preserve(command)
   call cursor(l, c)
 endfunction
 
-function! GetClojureFold()
-  if getline(v:lnum) =~ '^\s*(defn.*\s'
-    return ">1"
-  elseif getline(v:lnum) =~ '^\s*(defmacro.*\s'
-    return ">1"
-  elseif getline(v:lnum) =~ '^\s*(defmethod.*\s'
-    return ">1"
-  elseif getline(v:lnum) =~ '^\s*$'
-    let my_cljnum = v:lnum
-    let my_cljmax = line("$")
-
-    while (1)
-      let my_cljnum = my_cljnum + 1
-      if my_cljnum > my_cljmax
-        return "<1"
-      endif
-
-      let my_cljdata = getline(my_cljnum)
-
-      " If we match an empty line, stop folding
-      if my_cljdata =~ '^$'
-        return "<1"
-      else
-        return "="
-      endif
-    endwhile
-  else
-    return "="
-  endif
-endfunction
-
 " Following four functions are for running tests
 function! RunTests(filename)
   " Write the file and run tests for the given filename
@@ -724,54 +693,6 @@ autocmd FocusLost * :set number
 autocmd FocusGained * :set relativenumber
 autocmd InsertEnter * :set number
 autocmd InsertLeave * :set relativenumber
-"}}}
-
-"=====================Clojure Setup====================="{{{
-function! TurnOnClojureSettings()
-  setlocal foldexpr=GetClojureFold()
-  setlocal foldmethod=expr
-
-  " keymaps for sending lines to a REPL
-  " configure the screen variables
-  nmap <Leader>sc :call Screen_Vars()<CR>
-  " send visual selection to screen
-  vmap <Leader>sv "ry :call Send_to_Screen(@r)<CR>
-  " send the paragraph to screen
-  nmap <Leader>sp vip<Leader>sv
-  " send entire file to screen
-  nmap <Leader>sf :silent! :call Preserve("normal ggVG<Leader>sv")<CR>
-
-  " hit 'm' to jump to a matching ()
-  nmap m %
-  vmap m %
-
-  let vimclojure#WantNailgun = 0
-  let vimclojure#NailgunClient = "/home/rob/bin/ng"
-  let g:vimclojure#HighlightBuiltins = 1
-  let g:vimclojure#ParenRainbow = 1
-  let g:vimclojure#DynamicHighlighting = 1
-  let g:paredit_mode = 0
-endfunction
-
-" autocommand setup for clojure
-" define new group for myclojure
-" and make sure to remove all autocommands
-" for that group before defining them so when
-" I source this file I don't get multiple autocmds
-augroup myclojure
-  autocmd!
-  autocmd myclojure BufEnter *.clj call TurnOnClojureSettings()
-augroup END
-
-"}}}
-
-"=====================LaTeX stuff====================="{{{
-" set latexmk options
-"augroup mylatex
-"  autocmd!
-"  autocmd mylatex BufEnter *.tex let b:LatexBox_latexmk_options = "-pvc -pdfps"
-"  autocmd mylatex BufEnter *.tex let b:delimitMate_matchpairs = "(:),[:],{:},<:>,$:$"
-"augroup END
 "}}}
 
 "=====================CtrlP settings====================="{{{
