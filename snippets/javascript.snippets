@@ -1,7 +1,7 @@
 extends javascript
 
 snippet ng "AngularJS Module" !b
-${1:mod}.module("${2:Name}", [${3:deps}]);
+var ${1:mod} = angular.module("${2:Name}", [${3:deps}]);
 $0
 endsnippet
 
@@ -81,5 +81,11 @@ endsnippet
 snippet func "a named function" !b
 function ${1:name}(${2:params}) {
     $0
+}
+endsnippet
+
+snippet f "an anonymous function" w!
+function(${1}) {
+	$0
 }
 endsnippet
