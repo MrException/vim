@@ -28,6 +28,7 @@ Bundle 'groenewege/vim-less'
 Bundle 'itspriddle/vim-jquery.git'
 Bundle 'kana/vim-altr.git'
 Bundle 'kien/ctrlp.vim.git'
+Bundle 'kshenoy/vim-signature'
 Bundle 'maciakl/vim-neatstatus'
 Bundle 'majutsushi/tagbar.git'
 Bundle 'mattn/zencoding-vim.git'
@@ -540,8 +541,10 @@ noremap <Down>  :echo "no!"<cr>
 
 " change j and k so that when the line is really long and it wraps they will
 " work as expected
-nnoremap j gj
-nnoremap k gk
+nmap j gj
+nmap k gk
+vmap j gj
+vmap k gk
 
 " map J and K to go 10 lines up or down
 nnoremap <silent> <C-j> 10j
