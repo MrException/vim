@@ -28,8 +28,16 @@ ${1:mod}.directive("${2:Name}", function() {
 });
 endsnippet
 
-snippet desc "describe" !b
+snippet "desc?" "describe" !br
 describe("${1:description}", function() {
+    $0
+});
+endsnippet
+
+snippet jas "root jasmine describe" !b
+describe("${1:description}", function() {
+	"use strict";
+
     $0
 });
 endsnippet
