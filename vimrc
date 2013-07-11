@@ -15,41 +15,44 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-sensible'
 
-Bundle 'Lokaltog/vim-easymotion.git'
-"Bundle 'Lokaltog/vim-powerline.git'
+Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'Lokaltog/vim-powerline'
 Bundle 'Raimondi/delimitMate'
-Bundle 'SirVer/ultisnips.git'
-Bundle 'altercation/vim-colors-solarized.git'
-Bundle 'dbarsam/vim-bufkill.git'
-Bundle 'docunext/closetag.vim.git'
-Bundle 'ervandew/supertab.git'
-Bundle 'goldfeld/vim-seek.git'
+Bundle 'SirVer/ultisnips'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'dbarsam/vim-bufkill'
+Bundle 'docunext/closetag.vim'
+Bundle 'ervandew/supertab'
+Bundle 'goldfeld/vim-seek'
 Bundle 'groenewege/vim-less'
-Bundle 'itspriddle/vim-jquery.git'
-Bundle 'kana/vim-altr.git'
-Bundle 'kien/ctrlp.vim.git'
+Bundle 'itspriddle/vim-jquery'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'kana/vim-altr'
+Bundle 'kien/ctrlp.vim'
 Bundle 'kshenoy/vim-signature'
 Bundle 'maciakl/vim-neatstatus'
-Bundle 'majutsushi/tagbar.git'
-Bundle 'mattn/zencoding-vim.git'
-Bundle 'maxbrunsfeld/vim-yankstack.git'
-Bundle 'michaeljsmith/vim-indent-object.git'
-Bundle 'mileszs/ack.vim.git'
-Bundle 'pangloss/vim-javascript.git'
-Bundle 'scrooloose/nerdcommenter.git'
+Bundle 'majutsushi/tagbar'
+"Bundle 'marijnh/tern_for_vim'
+Bundle 'mattn/zencoding-vim'
+Bundle 'maxbrunsfeld/vim-yankstack'
+Bundle 'michaeljsmith/vim-indent-object'
+Bundle 'mileszs/ack.vim'
+Bundle 'pangloss/vim-javascript'
+Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic.git'
-Bundle 'terryma/vim-expand-region.git'
-Bundle 'terryma/vim-multiple-cursors.git'
-Bundle 'tpope/vim-dispatch.git'
-Bundle 'tpope/vim-endwise.git'
-Bundle 'tpope/vim-fugitive.git'
-Bundle 'tpope/vim-repeat.git'
-Bundle 'tpope/vim-surround.git'
-"Bundle 'vim-scripts/YankRing.vim.git'
-Bundle 'vim-scripts/ZoomWin.git'
-Bundle 'vim-scripts/dbext.vim.git'
-Bundle 'vim-scripts/matchit.zip.git'
+Bundle 'scrooloose/syntastic'
+Bundle 'terryma/vim-expand-region'
+Bundle 'terryma/vim-multiple-cursors'
+Bundle 'tpope/vim-dispatch'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-obsession'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-surround'
+"Bundle 'vim-scripts/YankRing.vim'
+Bundle 'vim-scripts/ZoomWin'
+Bundle 'vim-scripts/dbext.vim'
+Bundle 'vim-scripts/matchit.zip'
 "}}}
 
 "=====================General Options====================="{{{
@@ -90,6 +93,9 @@ set completeopt=menu
 set viewoptions="folds,options,cursor"
 "au BufWinLeave * silent! mkview
 "au BufWinEnter * silent! loadview
+
+" these options list what is saved when using mksession (and vim-sensible)
+set sessionoptions=blank,buffers,curdir,folds,help,options,resize,tabpages,winpos,winsize
 
 " enable syntax highlighting for jquery javascript
 "au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
@@ -692,10 +698,10 @@ augroup vimrcEx
   autocmd BufEnter * let &titlestring = "VIM | " . expand("%:t") . " |"
 augroup END
 
-autocmd FocusLost * :set number
-autocmd FocusGained * :set relativenumber
-autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
+"autocmd FocusLost * :set number
+"autocmd FocusGained * :set relativenumber
+"autocmd InsertEnter * :set number
+"autocmd InsertLeave * :set relativenumber
 "}}}
 
 "=====================CtrlP settings====================="{{{
@@ -707,11 +713,12 @@ let g:ctrlp_max_files = 100000
 "let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*\|etc.*'
 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v(\.git|\.svn|etc|build|node_modules)$',
+  \ 'dir':  '\v(\.git|\.svn|etc|build|node_modules|eclipse-build)$',
   \ 'file': '\v\.(exe|so|dll|jar|class)$',
   \ }
 
 nmap <leader>b :CtrlPBuffer<cr>
+nmap <leader>m :CtrlPMRU<cr>
 nmap <leader>gw :CtrlP<cr><C-\>w
 nmap <leader>gf vi""zy:CtrlP<cr><C-\>rz
 vmap <leader>gv "zy:CtrlP<cr><C-\>rz
@@ -749,8 +756,7 @@ let g:tagbar_type_xslt = {
 "}}}
 
 "=====================SuperTab settings====================="{{{
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-x><c-]>"
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 let g:SuperTabMappingForward = "<c-space>"
 let g:SuperTabMappingBackward = "<s-c-space>"
 let g:SuperTabClosePreviewOnPopupClose = 1
