@@ -262,15 +262,15 @@ set cursorline
 
 "=====================Folding options====================="{{{
 " Use markers to decide where to fold
-set foldmethod=manual
+set foldmethod=indent
 " Add a 2 character column to give visual indication of folds
 set foldcolumn=2
 " make all folds open by default using a high setting shere
 set foldlevel=20
 
 " these mappings will open and close folds or create new folds using spacebar
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
-vnoremap <Space> zf
+nnoremap <silent> <leader><leader> @=(foldlevel('.')?'za':'l')<CR>
+"vnoremap <Space> zf
 "}}}
 
 "=====================Color Related Things====================="{{{
@@ -383,7 +383,7 @@ function! UpdateTags()
   call DelTagOfFile(f)
   exe cmd
 endfunction
-autocmd BufWritePost *.java,*.js,*.xsl call UpdateTags()
+"autocmd BufWritePost *.java,*.js,*.xsl call UpdateTags()
 
 " visually select text then use '~' to change case
 function! TwiddleCase(str)
@@ -831,9 +831,10 @@ let g:BufKillActionWhenModifiedFileToBeKilled = 'confirm' " if file contents hav
 "=====================Altr settings====================="{{{
 call altr#remove_all()
 call altr#define('src/ui/*/%.js', 'MedAccess/web/WEB-INF/ui-test/unit/*/%.spec.js')
+call altr#define('src/ui/*/*/%.js','MedAccess/web/WEB-INF/ui-test/unit/*/*/%.spec.js')
 nmap <F2> <Plug>(altr-forward)
 "}}}
 
 "=====================easymotion settings====================="{{{
-"let g:EasyMotion_leader_key = '<Leader>'
+let g:EasyMotion_leader_key = '<space>'
 "}}}
