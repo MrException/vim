@@ -70,6 +70,12 @@ beforeEach(module(function(${1:dep}) {
 }));
 endsnippet
 
+snippet exist "expect a variable to be defined and not null" !b
+expect(${1:var}).toBeDefined();
+expect($1).not.toBeNull();
+$0
+endsnippet
+
 snippet esc "expect spy to have been called" !b
 expect(${1:target}).toHaveBeenCalled();
 endsnippet
@@ -96,4 +102,45 @@ snippet f "an anonymous function" w!
 function(${1}) {
 	$0
 }
+endsnippet
+
+snippet cspec "Outline for a controller spec" !b
+beforeEach(module("${1:Module}"));
+
+var scope;
+var ctrl;
+
+beforeEach(inject(function($rootScope, $controller) {
+	scope = $rootScope.$new();
+	scope.meta = {};
+	ctrl = $controller("${2:Controller Name}", { $scope: scope });
+	scope.$apply();
+}));
+
+it("should exist", function() {
+	expect(ctrl).toBeDefined();
+	expect(ctrl).not.toBeNull();
+});
+
+it("scope is set up", function() {
+	$0
+});
+endsnippet
+
+snippet sspec "Outline for a service spec" !b
+beforeEach(module("${1:Module}"));
+
+var service;
+var scope;
+var emrServer = helpers.mockEmrServer();
+
+beforeEach(inject(function(${2:Service}, $rootScope) {
+	service = $2;
+	scope = $rootScope;
+}));
+
+it("should exist", function() {
+	expect(service).not.toBeNull();
+	expect(service).toBeDefined();
+});
 endsnippet
