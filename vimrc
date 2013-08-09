@@ -56,6 +56,9 @@ Bundle 'vim-scripts/matchit.zip'
 "}}}
 
 "=====================General Options====================="{{{
+" enable syntax coloring
+syntax enable
+
 " force unix file format
 set fileformat=unix
 "set nobinary
@@ -275,11 +278,11 @@ nnoremap <silent> <leader><leader> @=(foldlevel('.')?'za':'l')<CR>
 
 "=====================Color Related Things====================="{{{
 "colorscheme mayansmoke "a nice light scheme
-set background=dark
 if has("gui_running")
+  set background=dark
   colorscheme solarized
 else
-  colorscheme solarized
+  colorscheme zenburn
 endif
 
 "}}}
