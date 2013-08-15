@@ -20,6 +20,7 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Raimondi/delimitMate'
 Bundle 'SirVer/ultisnips'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'arecarn/crunch'
 Bundle 'dbarsam/vim-bufkill'
 Bundle 'docunext/closetag.vim'
 Bundle 'ervandew/supertab'
@@ -737,7 +738,9 @@ let g:NERDTreeShowBookmarks=1
 " can't seem to get this next setting to work properly
 "let g:NERDTreeBookmarksFile='$HOME/.vim/NERDTreeBookmarks'
 
-nmap <Leader>d :NERDTreeToggle<CR>
+nmap <Leader>do :NERDTreeToggle<CR>
+nmap <Leader>df :NERDTreeFind<CR>
+nmap <Leader>dc :NERDTreeCWD<CR>
 "}}}
 
 "=====================TagBar settings====================="{{{
@@ -833,8 +836,8 @@ let g:BufKillActionWhenModifiedFileToBeKilled = 'confirm' " if file contents hav
 
 "=====================Altr settings====================="{{{
 call altr#remove_all()
-call altr#define('src/ui/*/%.js', 'MedAccess/web/WEB-INF/ui-test/unit/*/%.spec.js')
-call altr#define('src/ui/*/*/%.js','MedAccess/web/WEB-INF/ui-test/unit/*/*/%.spec.js')
+call altr#define('src/ui/*/%.js', 'src/ui/*/%.spec.js')
+call altr#define('src/ui/*/*/%.js','src/ui/*/*/%.spec.js')
 nmap <F2> <Plug>(altr-forward)
 "}}}
 
