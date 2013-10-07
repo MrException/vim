@@ -1,6 +1,7 @@
 *~
 autoload
 backups
+undo
 .netrwhist
 *swp
 bundle
