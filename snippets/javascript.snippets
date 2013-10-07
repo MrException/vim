@@ -7,9 +7,9 @@ endsnippet
 
 snippet serv "AngularJS Service" !b
 ${1:mod}.service("${2:ServiceName}", function(${3:dep}) {
-    this.${4:func} = function() {
+    this.${4:func} = function(${5:args}) {
         $0
-    }
+    };
 });
 endsnippet
 
@@ -117,11 +117,6 @@ beforeEach(inject(function($rootScope, $controller) {
 	scope.$apply();
 }));
 
-it("should exist", function() {
-	expect(ctrl).toBeDefined();
-	expect(ctrl).not.toBeNull();
-});
-
 it("scope is set up", function() {
 	$0
 });
@@ -131,16 +126,13 @@ snippet sspec "Outline for a service spec" !b
 beforeEach(module("${1:Module}"));
 
 var service;
-var scope;
 var emrServer = helpers.mockEmrServer();
 
-beforeEach(inject(function(${2:Service}, $rootScope) {
+beforeEach(inject(function(${2:Service}) {
 	service = $2;
-	scope = $rootScope;
 }));
+endsnippet
 
-it("should exist", function() {
-	expect(service).not.toBeNull();
-	expect(service).toBeDefined();
-});
+snippet eb "Spy was called" !b
+expect(${1:spy}).toHaveBeenCalled();
 endsnippet
