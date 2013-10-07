@@ -21,6 +21,8 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'SirVer/ultisnips'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'arecarn/crunch'
+Bundle 'bling/vim-airline'
+Bundle 'chriskempson/base16-vim'
 Bundle 'dbarsam/vim-bufkill'
 Bundle 'docunext/closetag.vim'
 Bundle 'ervandew/supertab'
@@ -28,13 +30,14 @@ Bundle 'goldfeld/vim-seek'
 Bundle 'groenewege/vim-less'
 Bundle 'itspriddle/vim-jquery'
 Bundle 'jelera/vim-javascript-syntax'
+Bundle 'justinmk/vim-gtfo'
 Bundle 'kana/vim-altr'
 Bundle 'kien/ctrlp.vim'
 Bundle 'kshenoy/vim-signature'
-Bundle 'maciakl/vim-neatstatus'
+"Bundle 'maciakl/vim-neatstatus' " using vim-airline now
 Bundle 'majutsushi/tagbar'
 "Bundle 'marijnh/tern_for_vim'
-Bundle 'mattn/zencoding-vim'
+Bundle 'mattn/emmet-vim'
 Bundle 'maxbrunsfeld/vim-yankstack'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'mileszs/ack.vim'
@@ -50,7 +53,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-obsession'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
-"Bundle 'vim-scripts/YankRing.vim'
+"Bundle 'vim-scripts/YankRing.vim' " using vim-yankstack now
 Bundle 'vim-scripts/ZoomWin'
 Bundle 'vim-scripts/dbext.vim'
 Bundle 'vim-scripts/matchit.zip'
@@ -62,6 +65,7 @@ syntax enable
 
 " force unix file format
 set fileformat=unix
+set fileformats=unix
 "set nobinary
 
 " look for dictionary files specific to filetypes
@@ -71,7 +75,7 @@ set fileformat=unix
 "autocmd! BufNewFile,BufRead *.pde setlocal ft=arduino
 
 " sets up backup/undo/swap dirs
-let s:dir = has('win32') ? '$APPDATA/Vim' : '~/.vim/'
+let s:dir = has('win32') ? '$HOME\.vim\' : '~/.vim/'
 if isdirectory(expand(s:dir))
   if &directory =~# '^\.,'
     let &directory = expand(s:dir) . '/swap//,' . &directory
@@ -221,7 +225,7 @@ set winheight=999
 
 " when switching to a different buffer, if it's open in another window go to
 " that window, otherwise open it in the current window
-set switchbuf=useopen
+"set switchbuf=useopen
 "}}}
 
 "=====================Windows options====================="{{{
@@ -281,7 +285,8 @@ nnoremap <silent> <leader><leader> @=(foldlevel('.')?'za':'l')<CR>
 "colorscheme mayansmoke "a nice light scheme
 if has("gui_running")
   set background=dark
-  colorscheme solarized
+  "colorscheme solarized
+  colorscheme base16-bright
 else
   colorscheme zenburn
 endif
@@ -289,15 +294,6 @@ endif
 "}}}
 
 "=====================Functions====================="{{{
-" toggle between relative and normal line numbers
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set number
-  else
-    set relativenumber
-  endif
-endfunction
-
 " pretty print json using python
 function! DoPrettyJSON()
 python << endpython
@@ -340,7 +336,6 @@ buf.append("}",row+1);
 vim.eval("feedkeys('=3j','n')")
 endpython
 endfunction
-command! WrapLineInNewBlock call DoWrapLineInNewBlock()
 
 " HARD MODE, can only move using searches!
 function! HardModeOn()
@@ -524,7 +519,8 @@ endfunction
 
 "=====================Key Mappings====================="{{{
 " make <C-c> act like <ESC>
-noremap <silent> <C-c> <ESC>
+vmap <C-c> <ESC>
+imap <C-c> <ESC>
 
 " always typing :W when I mean :w"
 command! W :w
@@ -585,7 +581,8 @@ nnoremap <silent> <space><space> <c-^>
 ":inoremap <C-k> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-k>"<CR>
 
 "This toggles the highlighting of searches - hit return in normal mode
-nnoremap <silent> <CR> :set hlsearch!<CR>
+nnoremap <CR> :set hlsearch!<CR>
+autocmd CmdwinEnter * nnoremap <buffer> <CR> <CR>
 
 " using tags, when over a word type alt-] to open the tag in a virtical split
 nnoremap <silent> <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
@@ -682,7 +679,7 @@ imap <c-n> <c-x><c-n>
 
 "nmap <leader>bl :Bufferlist<CR>
 
-nmap <leader># :call NumberToggle()<cr>
+nmap <leader># :set relativenumber!<cr>
 "}}}
 
 "=====================General Autocommands====================="{{{
@@ -694,18 +691,15 @@ augroup vimrcEx
   autocmd BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
-    \ endif 
+    \ endif
 
   "autocmd VimEnter * unmap! <Tab>
-  
+
   " set a nice title for the vim window
   autocmd BufEnter * let &titlestring = "VIM | " . expand("%:t") . " |"
-augroup END
 
-"autocmd FocusLost * :set number
-"autocmd FocusGained * :set relativenumber
-"autocmd InsertEnter * :set number
-"autocmd InsertLeave * :set relativenumber
+  autocmd FileType qf wincmd J " Open QuickFix horizontally
+augroup END
 "}}}
 
 "=====================CtrlP settings====================="{{{
@@ -717,7 +711,7 @@ let g:ctrlp_max_files = 100000
 "let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*\|etc.*'
 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v(\.git|\.svn|etc|build|node_modules|eclipse-build)$',
+  \ 'dir':  '\v(\.git|\.svn|etc|build|node_modules|eclipse-build|test-output)$',
   \ 'file': '\v\.(exe|so|dll|jar|class)$',
   \ }
 
@@ -783,7 +777,7 @@ nnoremap <C-S-e> :Errors<CR>
 "let g:snips_author = "Robert McBride"
 "let g:snips_trigger_key = "<tab>"
 "let g:snipMate = {}
-"let g:snipMate.scope_aliases = {} 
+"let g:snipMate.scope_aliases = {}
 "let g:snipMate.scope_aliases['jsp'] = 'jsp,html'
 "}}}
 
@@ -816,10 +810,11 @@ let g:EclimBrowser = "chromium"
 "}}}
 
 "=====================DBEXT settings====================="{{{
-let g:dbext_default_window_use_horiz = 0 "open split on right instead of bottom
+"let g:dbext_default_window_use_horiz = 0 "open split on right instead of bottom
 let g:dbext_default_profile_robm1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm1:host=devdb02.ma.net:port=3301"
 let g:dbext_default_profile_robm2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm2:host=devdb02.ma.net:port=3301"
 let g:dbext_default_profile_robm3 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm3:host=devdb02.ma.net:port=3301"
+let g:dbext_default_profile_calbot = "type=MYSQL:user=medaccess:passwd=madb:dbname=rm_calbot:host=devdb02.ma.net:port=3301"
 "let g:dbext_default_profile = "rob1"
 let g:dbext_default_prompt_for_parameters = 0 "turn off the 'feature' where it prompts you for parameters
 "}}}
@@ -838,9 +833,19 @@ let g:BufKillActionWhenModifiedFileToBeKilled = 'confirm' " if file contents hav
 call altr#remove_all()
 call altr#define('src/ui/*/%.js', 'src/ui/*/%.spec.js')
 call altr#define('src/ui/*/*/%.js','src/ui/*/*/%.spec.js')
+call altr#define('src/ui/*/*/*/%.js','src/ui/*/*/*/%.spec.js')
 nmap <F2> <Plug>(altr-forward)
 "}}}
 
 "=====================easymotion settings====================="{{{
 let g:EasyMotion_leader_key = '<space>'
 "}}}
+
+"=====================airline settings====================="{{{
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline_section_b='' " remove (hunks, branch)
+let g:airline_section_y='' " remove (fileencoding, fileformat)
+let g:airline#extensions#syntastic#enabled = 1
+"}}}
+
