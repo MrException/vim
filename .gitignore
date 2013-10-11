@@ -1,4 +1,6 @@
 *~
+plugin
+eclim
 autoload
 backups
 undo
