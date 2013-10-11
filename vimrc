@@ -19,13 +19,15 @@ Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'Lokaltog/vim-powerline'
 Bundle 'Raimondi/delimitMate'
 Bundle 'SirVer/ultisnips'
+"Bundle 'Shougo/neocomplete.vim'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'arecarn/crunch'
 Bundle 'bling/vim-airline'
 Bundle 'chriskempson/base16-vim'
 Bundle 'dbarsam/vim-bufkill'
 Bundle 'docunext/closetag.vim'
-Bundle 'ervandew/supertab'
+"Bundle 'ervandew/supertab'
 Bundle 'goldfeld/vim-seek'
 Bundle 'groenewege/vim-less'
 Bundle 'itspriddle/vim-jquery'
@@ -36,7 +38,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'kshenoy/vim-signature'
 "Bundle 'maciakl/vim-neatstatus' " using vim-airline now
 Bundle 'majutsushi/tagbar'
-"Bundle 'marijnh/tern_for_vim'
+Bundle 'marijnh/tern_for_vim'
 Bundle 'mattn/emmet-vim'
 Bundle 'maxbrunsfeld/vim-yankstack'
 Bundle 'michaeljsmith/vim-indent-object'
@@ -45,6 +47,7 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
+"Bundle 'teramako/jscomplete-vim'
 Bundle 'terryma/vim-expand-region'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'tpope/vim-dispatch'
@@ -65,7 +68,7 @@ syntax enable
 
 " force unix file format
 set fileformat=unix
-set fileformats=unix
+set fileformats=unix,dos
 "set nobinary
 
 " look for dictionary files specific to filetypes
@@ -181,8 +184,8 @@ set writebackup
 " turn on line numbering
 set nu
 
-" show the current mode
-set showmode
+" don't show the current mode
+set noshowmode
 
 " hide mouse pointer while typing
 set mousehide
@@ -226,6 +229,26 @@ set winheight=999
 " when switching to a different buffer, if it's open in another window go to
 " that window, otherwise open it in the current window
 "set switchbuf=useopen
+"}}}
+"
+"=====================JavaScript mapping====================="{{{
+augroup javascript
+  autocmd!
+  autocmd FileType javascript nnoremap <buffer> <C-]> :TernDef<CR>
+  autocmd FileType javascript nnoremap <buffer> <C-T> <C-O>
+augroup END
+"}}}
+"
+"=====================Java mapping====================="{{{
+augroup javascript
+  autocmd!
+  autocmd FileType java nnoremap <buffer> <C-]> :JavaSearchContext<CR>
+  autocmd FileType java nnoremap <buffer> <F3> :JavaSearchContext<cr>
+  autocmd FileType java nnoremap <buffer> <C-T> <C-O>
+  autocmd FileType java nnoremap <buffer> <leader>i :JavaImport<cr>
+  autocmd FileType java nnoremap <buffer> <c-s-f> :%JavaFormat<cr>
+  autocmd FileType java nnoremap <buffer> <leader>C :JavaCorrect<cr>
+augroup END
 "}}}
 
 "=====================Windows options====================="{{{
@@ -323,19 +346,6 @@ del buf[0] # append adds to the second line, so delete first blank line
 endpython
 endfunction
 command! PrettyXML call DoPrettyXML()
-
-function! DoWrapLineInNewBlock()
-python << endpython
-import vim
-
-buf = vim.current.buffer
-win = vim.current.window
-(row,col) = win.cursor
-buf.append("{",row-1);
-buf.append("}",row+1);
-vim.eval("feedkeys('=3j','n')")
-endpython
-endfunction
 
 " HARD MODE, can only move using searches!
 function! HardModeOn()
@@ -514,7 +524,6 @@ function! ToggleList(bufname, pfx)
     wincmd p
   endif
 endfunction
-
 "}}}
 
 "=====================Key Mappings====================="{{{
@@ -528,22 +537,22 @@ command! W :w
 " save with ctrl-s
 nmap <c-s> :w<cr>
 
-" change the <Leader> character to ','
+" change the <leader> character to ','
 let mapleader = ','
 
 " Edit and source the vimrc file
-nnoremap <silent> <Leader>ev :exec ":e " . g:vimrc<CR>
-nnoremap <silent> <Leader>sv :exec ":so " . g:vimrc<CR>
+nnoremap <silent> <leader>ev :exec ":e " . g:vimrc<CR>
+nnoremap <silent> <leader>sv :exec ":so " . g:vimrc<CR>
 
 " map arrow keys to nothing so I don't use them anymore! learn the hard way
-noremap <Left>  :echo "no!"<cr>
-noremap <Right> :echo "no!"<cr>
-noremap <Up>    :echo "no!"<cr>
-noremap <Down>  :echo "no!"<cr>
-"nmap <Left>  h
-"nmap <Right> l
-"nmap <Up>    k
-"nmap <Down>  j
+noremap <Left>  <nop>
+noremap <Right> <nop>
+noremap <Up>    <nop>
+noremap <Down>  <nop>
+inoremap <Left>  <nop>
+inoremap <Right> <nop>
+inoremap <Up>    <nop>
+inoremap <Down>  <nop>
 
 " change j and k so that when the line is really long and it wraps they will
 " work as expected
@@ -552,132 +561,106 @@ nmap k gk
 vmap j gj
 vmap k gk
 
-" map J and K to go 10 lines up or down
-nnoremap <silent> <C-j> 10j
-nnoremap <silent> <C-k> 10k
-
 " beginning and end of line
-noremap <silent> <C-h> ^
-noremap <silent> <C-l> $
+noremap <silent> <c-h> ^
+noremap ^ :echo "use <c-h>!"<cr>
+noremap <silent> <c-l> $
+noremap $ :echo "use <c-l>!"<cr>
 
 " switch to last used buffer
 nnoremap <silent> <space><space> <c-^>
-
-" Easy window navigation
-" Don't really use these anymore
-"nmap <A-h> <C-w>h
-"nmap <A-j> <C-w>j
-"nmap <A-k> <C-w>k
-"nmap <A-l> <C-w>l
-"nmap <A-c> <C-w>c
 
 " Increase and decrease window width
 :nmap <A-.> :vertical res +2<cr>
 :nmap <A-,> :vertical res -2<cr>
 
-" when a omni-complete popup is visible use C-j and C-k to go up and down
-" default map is C-p and C-n which is ok, leaving these here as examples
-":inoremap <C-j> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-j>"<CR>
-":inoremap <C-k> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-k>"<CR>
-
-"This toggles the highlighting of searches - hit return in normal mode
+" This toggles the highlighting of searches - hit return in normal mode
 nnoremap <CR> :set hlsearch!<CR>
+" but still want return to run the command in the command window
 autocmd CmdwinEnter * nnoremap <buffer> <CR> <CR>
+autocmd FileType qf nnoremap <buffer> <CR> <CR>
 
 " using tags, when over a word type alt-] to open the tag in a virtical split
 nnoremap <silent> <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " using tags, when there is more than one matching tag, use ,n to go to next tag
 " and close the current window
-nmap <Leader>n :BD<cr> :tnext<cr>
+nmap <leader>n :BD<cr> :tnext<cr>
 
 " map ,ss to spellcheck
-nnoremap <silent> <Leader>ss :set spell!<CR>
+nnoremap <silent> <leader>ss :set spell!<CR>
 
 " change directory to that of current file
-nnoremap <silent> <Leader>cd :cd%:p:h<cr>
+nnoremap <silent> <leader>cd :cd%:p:h<cr>
 
 " change directory to that of current file - but just for current window
-nnoremap <silent> <Leader>lcd :lcd%:p:h<cr>
+"nnoremap <silent> <leader>lcd :lcd%:p:h<cr>
 
 " clean up a file: (in this order)
 " -remove \r (^M) characters
 " -remove trailing white space
 " -turn tabs into spaces
-nnoremap <silent> <Leader>rs :silent! :call Preserve("%s/\r//g\|%s/\\s\\+$//e\|:retab")<CR>
+nnoremap <silent> <leader>rs :silent! :call Preserve("%s/\r//g\|%s/\\s\\+$//e\|:retab")<CR>
 
 " fix tab formatting of buffer
-nnoremap <silent> <Leader>FF :silent! :call Preserve("normal gg=G")<CR>
+nnoremap <silent> <c-s-f> :silent! :call Preserve("normal gg=G")<CR>
 
 " fix formatting of paragraph block: line length and tabs
-nnoremap <silent> <Leader>FP :silent! :call Preserve("normal vipgq")<CR>
+nnoremap <silent> <leader>FP :silent! :call Preserve("normal vipgq")<CR>
 
 " toggle comment status of selected lines using NERDCommenter
-noremap <silent> <Leader>cc ,c<space>
+noremap <silent> <leader>cc ,c<space>
 
 " mapping to copy from clipboard xclip program needed
-"nnoremap <silent> <Leader>v :r ! xclip -o<CR>
+"nnoremap <silent> <leader>v :r ! xclip -o<CR>
 
 " mapping to paste to the system clipboard
-nnoremap <silent> <Leader>v "*p
-vnoremap <silent> <Leader>c "*y
-nnoremap <silent> <Leader>c<CR> "*yy
+nnoremap <silent> <leader>v "*p
+vnoremap <silent> <leader>c "*y
 
 " run a test.sh script in the current directory
 nnoremap <silent> <A-T> :!./test.sh<CR>
 
 " open rails 'special' files in top window
-" nnoremap <silent> <Leader>gr :topleft :split config/routes.rb<cr>
-" nnoremap <silent> <Leader>gR :call ShowRoutes()<cr>
-" nnoremap <silent> <Leader>gg :topleft 100 :split Gemfile<cr>
+" nnoremap <silent> <leader>gr :topleft :split config/routes.rb<cr>
+" nnoremap <silent> <leader>gR :call ShowRoutes()<cr>
+" nnoremap <silent> <leader>gg :topleft 100 :split Gemfile<cr>
 
 " find directory of current file
 "cnoremap <silent> %% <C-R>=expand('%:h').'/'<cr> "old way
 cabbr %% <C-R>=expand('%:p:h') . '/'<CR>
 
 " edit or view files in directory of current file
-"nnoremap <silent> <Leader>e :edit %% "old way
-nnoremap <Leader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
+"nnoremap <silent> <leader>e :edit %% "old way
+nnoremap <leader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
 
 " switching forward and backward between buffers
-nnoremap <silent> <Leader><Tab> :bn<cr>
-nnoremap <silent> <Leader><S-Tab> :bp<cr>
+nnoremap <silent> <leader><Tab> :bn<cr>
+nnoremap <silent> <leader><S-Tab> :bp<cr>
 
 " running tests
 " Run this file
-nnoremap <silent> <Leader>t :call RunTestFile()<cr>
+nnoremap <silent> <leader>t :call RunTestFile()<cr>
 " Run only the example under the cursor
-nnoremap <silent> <Leader>T :call RunNearestTest()<cr>
+nnoremap <silent> <leader>T :call RunNearestTest()<cr>
 " Run all test files
-nnoremap <silent> <Leader>A :call RunTests('')<cr>
+nnoremap <silent> <leader>A :call RunTests('')<cr>
 
 " smart tab completion
 "inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 "inoremap <s-tab> <c-n>
 
-" close the current buffer, and close the current window
-"nnoremap <silent> <Leader>bd :BD<cr>\|<C-w>c
-
 " Insert a hash rocket with <c-l>
 inoremap <c-l> <space>=><space>
 
-nnoremap <silent> <buffer> <F3> :JavaSearchContext<cr>
-nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
-
 " toggle display of quickfix, and location list
-nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c')<CR>
-nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
+nnoremap <silent> <leader>q :call ToggleList("Quickfix List", 'c')<CR>
+nnoremap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 
 nmap ]] ]m
 nmap [[ [m
 
-nmap <leader>L :call DoWrapLineInNewBlock()<CR>
-
-imap <c-n> <c-x><c-n>
-
-"nmap <leader>fl :Utl<CR>
-
-"nmap <leader>bl :Bufferlist<CR>
+nnoremap <leader>L kA {<esc>jo}<esc>k==
 
 nmap <leader># :set relativenumber!<cr>
 "}}}
@@ -708,12 +691,14 @@ let g:ctrlp_map = "<leader>f"
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_depth = 100
 let g:ctrlp_max_files = 100000
-"let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*\|etc.*'
+let g:ctrlp_switch_buffer = ""
+let g:ctrlp_clear_cache_on_exit = 0
 
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v(\.git|\.svn|etc|build|node_modules|eclipse-build|test-output)$',
   \ 'file': '\v\.(exe|so|dll|jar|class)$',
   \ }
+"let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*\|etc.*'
 
 nmap <leader>b :CtrlPBuffer<cr>
 nmap <leader>m :CtrlPMRU<cr>
@@ -732,14 +717,14 @@ let g:NERDTreeShowBookmarks=1
 " can't seem to get this next setting to work properly
 "let g:NERDTreeBookmarksFile='$HOME/.vim/NERDTreeBookmarks'
 
-nmap <Leader>do :NERDTreeToggle<CR>
-nmap <Leader>df :NERDTreeFind<CR>
-nmap <Leader>dc :NERDTreeCWD<CR>
+nmap <leader>do :NERDTreeToggle<CR>
+nmap <leader>df :NERDTreeFind<CR>
+nmap <leader>dc :NERDTreeCWD<CR>
 "}}}
 
 "=====================TagBar settings====================="{{{
 " toggle taglist window
-nnoremap <silent> <Leader>o :TagbarToggle<CR>
+nnoremap <silent> <leader>o :TagbarToggle<CR>
 
 let g:tagbar_type_xslt = {
       \ 'ctagstype' : 'xslt',
@@ -756,10 +741,10 @@ let g:tagbar_type_xslt = {
 "}}}
 
 "=====================SuperTab settings====================="{{{
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-let g:SuperTabMappingForward = "<c-space>"
-let g:SuperTabMappingBackward = "<s-c-space>"
-let g:SuperTabClosePreviewOnPopupClose = 1
+"let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+"let g:SuperTabMappingForward = "<c-space>"
+"let g:SuperTabMappingBackward = "<s-c-space>"
+"let g:SuperTabClosePreviewOnPopupClose = 1
 "}}}
 
 "=====================Syntastic settings====================="{{{
@@ -785,11 +770,12 @@ nnoremap <C-S-e> :Errors<CR>
 let g:UltiSnipsEditSplit = "horizontal"
 let g:UltiSnipsSnippetsDir = "~/.vim/snippets/"
 let g:UltiSnipsSnippetDirectories=["snippets","UltiSnips"]
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsDontReverseSearchPath="1"
+
 map <leader>ue :UltiSnipsEdit<cr>
 "}}}
 
@@ -802,8 +788,9 @@ let g:user_zen_leader_key = '<c-y>'
 let g:EclimCssValidate = 0
 let g:EclimHtmlValidate = 0
 let g:EclimXmlValidate = 0
-
-let g:EclimBrowser = "chromium"
+let g:EclimCompletionMethod = "omnifunc"
+let g:EclimBrowser = "chrome"
+let g:EclimJavaSearchSingleResult = "edit"
 " not working??
 "nmap <silent> <c-x> :call eclim#vimplugin#FeedKeys('Ctrl+Alt+x')<cr>
 "nmap <silent> <c-m> :call eclim#vimplugin#FeedKeys('Ctrl+M')<cr>
@@ -849,3 +836,6 @@ let g:airline_section_y='' " remove (fileencoding, fileformat)
 let g:airline#extensions#syntastic#enabled = 1
 "}}}
 
+"=====================tern settings====================="{{{
+let g:tern_show_argument_hints = 'on_hold'
+"}}}
