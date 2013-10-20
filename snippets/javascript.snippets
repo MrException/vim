@@ -104,6 +104,18 @@ function(${1}) {
 }
 endsnippet
 
+snippet fc "a directive compile function" w!
+function(tElem, tAttrs, linkFn) {
+	$0
+}
+endsnippet
+
+snippet fl "a directive link function" w!
+function(scope, iElem, iAttrs, ctrls) {
+	$0
+}
+endsnippet
+
 snippet cspec "Outline for a controller spec" !b
 beforeEach(module("${1:Module}"));
 
