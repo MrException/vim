@@ -16,29 +16,30 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-sensible'
 
 Bundle 'Lokaltog/vim-easymotion'
-"Bundle 'Lokaltog/vim-powerline'
+"Bundle 'Lokaltog/vim-powerline' " using vim-airline now
 Bundle 'Raimondi/delimitMate'
 Bundle 'SirVer/ultisnips'
-"Bundle 'Shougo/neocomplete.vim'
+"Bundle 'Shougo/neocomplete.vim' " using YCM now
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'altercation/vim-colors-solarized'
+"Bundle 'altercation/vim-colors-solarized' " based16 instead
 Bundle 'arecarn/crunch'
 Bundle 'bling/vim-airline'
 Bundle 'chriskempson/base16-vim'
 Bundle 'dbarsam/vim-bufkill'
 Bundle 'docunext/closetag.vim'
-"Bundle 'ervandew/supertab'
-Bundle 'goldfeld/vim-seek'
+"Bundle 'ervandew/supertab' " use YCM now
+"Bundle 'goldfeld/vim-seek' " replaced by vim-sneak
 Bundle 'groenewege/vim-less'
 Bundle 'itspriddle/vim-jquery'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'justinmk/vim-gtfo'
+Bundle 'justinmk/vim-sneak'
 Bundle 'kana/vim-altr'
 Bundle 'kien/ctrlp.vim'
 Bundle 'kshenoy/vim-signature'
 "Bundle 'maciakl/vim-neatstatus' " using vim-airline now
 Bundle 'majutsushi/tagbar'
-Bundle 'marijnh/tern_for_vim'
+"Bundle 'marijnh/tern_for_vim' " tern just to slow, us jscomplete-vim for now
 Bundle 'mattn/emmet-vim'
 Bundle 'maxbrunsfeld/vim-yankstack'
 Bundle 'michaeljsmith/vim-indent-object'
@@ -47,7 +48,7 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
-"Bundle 'teramako/jscomplete-vim'
+Bundle 'teramako/jscomplete-vim'
 Bundle 'terryma/vim-expand-region'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'tpope/vim-dispatch'
@@ -234,13 +235,14 @@ set winheight=999
 "=====================JavaScript mapping====================="{{{
 augroup javascript
   autocmd!
-  autocmd FileType javascript nnoremap <buffer> <C-]> :TernDef<CR>
-  autocmd FileType javascript nnoremap <buffer> <C-T> <C-O>
+  autocmd FileType javascript :setlocal omnifunc=jscomplete#CompleteJS
+  "autocmd FileType javascript nnoremap <buffer> <C-]> :TernDef<CR>
+  "autocmd FileType javascript nnoremap <buffer> <C-T> <C-O>
 augroup END
 "}}}
 "
 "=====================Java mapping====================="{{{
-augroup javascript
+augroup java
   autocmd!
   autocmd FileType java nnoremap <buffer> <C-]> :JavaSearchContext<CR>
   autocmd FileType java nnoremap <buffer> <F3> :JavaSearchContext<cr>
@@ -253,12 +255,16 @@ augroup END
 
 "=====================Windows options====================="{{{
 if has("win32")
+  " if in windows it means I'm at work, so these settings are for work code
+  
   "set shell=powershell.exe
   "set shellcmdflag=/c\ powershell.exe\ -NoLogo\ -NoProfile\ -NonInteractive\ -ExecutionPolicy\ RemoteSigned
   "set shellpipe=|
   "set shellredir=>
   let $TMP="C:/tmp"
   set wak=no " attempt to fix using ALT in mapping
+  set textwidth=120
+  set wrapmargin=120
 endif
 "}}}
 
@@ -788,6 +794,7 @@ let g:user_zen_leader_key = '<c-y>'
 let g:EclimCssValidate = 0
 let g:EclimHtmlValidate = 0
 let g:EclimXmlValidate = 0
+let g:EclimJavascriptValidate = 0
 let g:EclimCompletionMethod = "omnifunc"
 let g:EclimBrowser = "chrome"
 let g:EclimJavaSearchSingleResult = "edit"
@@ -837,5 +844,5 @@ let g:airline#extensions#syntastic#enabled = 1
 "}}}
 
 "=====================tern settings====================="{{{
-let g:tern_show_argument_hints = 'on_hold'
+"let g:tern_show_argument_hints = 'on_hold'
 "}}}
