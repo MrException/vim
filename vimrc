@@ -230,6 +230,9 @@ set winheight=999
 " when switching to a different buffer, if it's open in another window go to
 " that window, otherwise open it in the current window
 "set switchbuf=useopen
+
+" the 'j' option will remove leading comment characters when joining line
+set formatoptions+=j
 "}}}
 "
 "=====================JavaScript mapping====================="{{{
@@ -808,7 +811,6 @@ let g:EclimJavaSearchSingleResult = "edit"
 let g:dbext_default_profile_robm1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm1:host=devdb02.ma.net:port=3301"
 let g:dbext_default_profile_robm2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm2:host=devdb02.ma.net:port=3301"
 let g:dbext_default_profile_robm3 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm3:host=devdb02.ma.net:port=3301"
-let g:dbext_default_profile_calbot = "type=MYSQL:user=medaccess:passwd=madb:dbname=rm_calbot:host=devdb02.ma.net:port=3301"
 "let g:dbext_default_profile = "rob1"
 let g:dbext_default_prompt_for_parameters = 0 "turn off the 'feature' where it prompts you for parameters
 "}}}
