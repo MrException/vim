@@ -1,105 +1,60 @@
+# vim: set noexpandtab foldmethod=marker foldlevel=0 sw=2 ts=2:
 extends javascript
 
-snippet ng "AngularJS Module" !b
-var ${1:mod} = angular.module("${2:Name}", [${3:deps}]);
-$0
-endsnippet
-
+## Angular Templates {{{
 snippet serv "AngularJS Service" !b
 ${1:mod}.service("${2:ServiceName}", function(${3:dep}) {
-    this.${4:func} = function(${5:args}) {
-        $0
-    };
+	this.${4:func} = function(${5:args}) {
+		$0
+	};
 });
 endsnippet
 
 snippet cont "AngularJS Controller" !b
 ${1:mod}.controller("${2:SomethingCtrl}", function($scope) {
-    $0
+	$0
 });
 endsnippet
 
 snippet dir "AngularJS Directive" !b
 ${1:mod}.directive("${2:Name}", function() {
-    return {
-        restrict: "${3:AEC}",
-        $0
-    };
+	return {
+		restrict: "${3:AEC}",
+		$0
+	};
 });
 endsnippet
+## Angular Templates }}}
 
-snippet "desc?" "describe" !br
-describe("${1:description}", function() {
-    $0
-});
-endsnippet
-
-snippet jas "root jasmine describe" !b
-describe("${1:description}", function() {
+## Angular Modules {{{
+snippet mod "module creation wrapper" !b
+(function() {
 	"use strict";
 
-    $0
-});
-endsnippet
-
-snippet it "it" !b
-it("${1:description}", function() {
-    $0
-});
-endsnippet
-
-snippet iti "it with inject" !b
-it("${1:description}", inject(function(${2:dep}) {
-    $0
-}));
-endsnippet
-
-snippet befi "beforeEach with inject" !b
-beforeEach(inject(function(${1:dep}) {
-    $0
-}));
-endsnippet
-
-snippet befm "beforeEach with module" !b
-beforeEach(module(${1:dep}));$0
-endsnippet
-
-snippet befmf "beforeEach with module and function" !b
-beforeEach(module(function(${1:dep}) {
-    $0
-}));
-endsnippet
-
-snippet exist "expect a variable to be defined and not null" !b
-expect(${1:var}).toBeDefined();
-expect($1).not.toBeNull();
-$0
-endsnippet
-
-snippet esc "expect spy to have been called" !b
-expect(${1:target}).toHaveBeenCalled();
-endsnippet
-
-snippet notsc "expect spy to have not been called" !b
-expect(${1:target}).not.toHaveBeenCalled();
-endsnippet
-
-snippet mod "module wrapper" !b
-(function() {
-    "use strict";
-
-    $0
+	var ${1:mod} = angular.module("${2:Name}", [${3:deps}]);
+	$0
 })();
 endsnippet
 
-snippet func "a named function" !b
-function ${1:name}(${2:params}) {
-    $0
+snippet mode "module extend wrapper" !b
+(function() {
+	"use strict";
+
+	var ${1:mod} = angular.module("${2:Name}");
+	$0
+})();
+endsnippet
+## Angular Modules }}}
+
+## Functions {{{
+snippet f "an anonymous function" w!
+function(${1}) {
+	$0
 }
 endsnippet
 
-snippet f "an anonymous function" w!
-function(${1}) {
+snippet fn "a named function" !b
+function ${1:name}(${2:params}) {
 	$0
 }
 endsnippet
@@ -115,16 +70,77 @@ function(scope, iElem, iAttrs, ctrls) {
 	$0
 }
 endsnippet
+## Functions }}}
 
+## Jasmine helpers {{{
+snippet jas "root jasmine describe" !b
+describe("${1:description}", function() {
+	"use strict";
+	$0
+});
+endsnippet
+
+snippet desc "describe" !b
+describe("${1:description}", function() {
+	$0
+});
+endsnippet
+
+snippet it "it" !b
+it("${1:description}", function() {
+	$0
+});
+endsnippet
+
+snippet iti "it with inject" !b
+it("${1:description}", inject(function(${2:dep}) {
+	$0
+}));
+endsnippet
+
+snippet befi "beforeEach with inject" !b
+beforeEach(inject(function(${1:dep}) {
+	$0
+}));
+endsnippet
+
+snippet befm "beforeEach with module" !b
+beforeEach(module(${1:dep}));$0
+endsnippet
+
+snippet befmf "beforeEach with module and function" !b
+beforeEach(module(function(${1:dep}) {
+	$0
+}));
+endsnippet
+## Jasmine helpers }}}
+
+## Expectations {{{
+snippet exist "expect a variable to be defined and not null" !b
+expect(${1:var}).toBeDefined();
+expect($1).not.toBeNull();
+$0
+endsnippet
+
+snippet eb "Spy was called" !b
+expect(${1:spy}).toHaveBeenCalled();
+endsnippet
+
+snippet noteb "expect spy to have not been called" !b
+expect(${1:target}).not.toHaveBeenCalled();
+endsnippet
+## Expectations }}}
+
+## Spec Templates {{{
 snippet cspec "Outline for a controller spec" !b
 beforeEach(module("${1:Module}"));
 
 var scope;
 var ctrl;
 
+/*jshint camelcase:false*/
 beforeEach(inject(function($rootScope, $controller) {
 	scope = $rootScope.$new();
-	scope.meta = {};
 	ctrl = $controller("${2:Controller Name}", { $scope: scope });
 	scope.$apply();
 }));
@@ -140,11 +156,37 @@ beforeEach(module("${1:Module}"));
 var service;
 var emrServer = helpers.mockEmrServer();
 
+/*jshint camelcase:false*/
 beforeEach(inject(function(${2:Service}) {
 	service = $2;
 }));
+
+$0
 endsnippet
 
-snippet eb "Spy was called" !b
-expect(${1:spy}).toHaveBeenCalled();
+snippet dspec "Outline for a directive spec" !b
+beforeEach(module("${1:Module}"));
+
+var el;
+var $compile;
+var html;
+var scope;
+
+function compile() {
+	el = $compile(html)(scope);
+}
+
+/*jshint camelcase:false*/
+beforeEach(inject(function(_$compile_, $rootScope) {
+	$compile = _$compile_;
+	html = [
+		${2:Markup}
+	].join("");
+
+	scope = $rootScope.$new();
+	compile();
+}));
+
+$0
 endsnippet
+## Spec Templates }}}
