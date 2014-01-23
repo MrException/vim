@@ -15,7 +15,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-sensible'
 
-Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'Lokaltog/vim-powerline' " using vim-airline now
 Bundle 'Raimondi/delimitMate'
 Bundle 'SirVer/ultisnips'
@@ -259,12 +259,12 @@ augroup END
 "=====================Windows options====================="{{{
 if has("win32")
   " if in windows it means I'm at work, so these settings are for work code
-  
+
   "set shell=powershell.exe
   "set shellcmdflag=/c\ powershell.exe\ -NoLogo\ -NoProfile\ -NonInteractive\ -ExecutionPolicy\ RemoteSigned
   "set shellpipe=|
   "set shellredir=>
-  let $TMP="C:/tmp"
+  "let $TMP="C:/tmp"
   set wak=no " attempt to fix using ALT in mapping
   set textwidth=120
   set wrapmargin=120
@@ -672,6 +672,10 @@ nmap [[ [m
 nnoremap <leader>L kA {<esc>jo}<esc>k==
 
 nmap <leader># :set relativenumber!<cr>
+
+" find version control conflict markers
+nnoremap <silent> ]C /\v^[<>=]{4}($\|\s)<CR>
+nnoremap <silent> [C ?\v^[<>=]{4}($\|\s)<CR>
 "}}}
 
 "=====================General Autocommands====================="{{{
