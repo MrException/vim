@@ -8,8 +8,9 @@ set nocompatible
 autocmd!
 
 "=====================Vundle====================="{{{
-set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
+set rtp=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/ycm/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
@@ -20,13 +21,14 @@ Bundle 'tpope/vim-sensible'
 Bundle 'Raimondi/delimitMate'
 Bundle 'SirVer/ultisnips'
 "Bundle 'Shougo/neocomplete.vim' " using YCM now
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe' " still using YCM, but handling manually because of binaries
 "Bundle 'altercation/vim-colors-solarized' " based16 instead
 Bundle 'arecarn/crunch'
 Bundle 'bling/vim-airline'
 Bundle 'chriskempson/base16-vim'
 Bundle 'dbarsam/vim-bufkill'
 Bundle 'docunext/closetag.vim'
+"Bundle 'embear/vim-localvimrc' " somethign to look into using in the future
 "Bundle 'ervandew/supertab' " use YCM now
 "Bundle 'goldfeld/vim-seek' " replaced by vim-sneak
 Bundle 'groenewege/vim-less'
@@ -64,6 +66,7 @@ Bundle 'vim-scripts/matchit.zip'
 "}}}
 
 "=====================General Options====================="{{{
+filetype plugin indent on
 " enable syntax coloring
 syntax enable
 
@@ -676,6 +679,11 @@ nmap <leader># :set relativenumber!<cr>
 " find version control conflict markers
 nnoremap <silent> ]C /\v^[<>=]{4}($\|\s)<CR>
 nnoremap <silent> [C ?\v^[<>=]{4}($\|\s)<CR>
+
+" fix bug with yankstack, it overwrites sneak's mappings
+call yankstack#setup()
+nmap s <Plug>SneakForward
+nmap S <Plug>SneakBackward
 "}}}
 
 "=====================General Autocommands====================="{{{
