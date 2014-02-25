@@ -4,6 +4,7 @@ eclim
 autoload
 backups
 undo
+swap
 .netrwhist
 *swp
 bundle

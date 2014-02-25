@@ -18,6 +18,7 @@ Bundle 'tpope/vim-sensible'
 
 "Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'Lokaltog/vim-powerline' " using vim-airline now
+"Bundle 'jiangmiao/auto-pairs' " possible replacement for delimitMate??
 Bundle 'Raimondi/delimitMate'
 Bundle 'SirVer/ultisnips'
 "Bundle 'Shougo/neocomplete.vim' " using YCM now
@@ -40,7 +41,7 @@ Bundle 'kana/vim-altr'
 Bundle 'kien/ctrlp.vim'
 Bundle 'kshenoy/vim-signature'
 "Bundle 'maciakl/vim-neatstatus' " using vim-airline now
-Bundle 'majutsushi/tagbar'
+"Bundle 'majutsushi/tagbar'
 "Bundle 'marijnh/tern_for_vim' " tern just to slow, us jscomplete-vim for now
 Bundle 'mattn/emmet-vim'
 Bundle 'maxbrunsfeld/vim-yankstack'
@@ -684,6 +685,21 @@ nnoremap <silent> [C ?\v^[<>=]{4}($\|\s)<CR>
 call yankstack#setup()
 nmap s <Plug>SneakForward
 nmap S <Plug>SneakBackward
+
+"replace 'f' with inclusive 1-char Sneak
+"nmap f <Plug>Sneak_f
+"nmap F <Plug>Sneak_F
+"xmap f <Plug>Sneak_f
+"xmap F <Plug>Sneak_F
+"omap f <Plug>Sneak_f
+"omap F <Plug>Sneak_F
+"replace 't' with exclusive 1-char Sneak
+"nmap t <Plug>Sneak_t
+"nmap T <Plug>Sneak_T
+"xmap t <Plug>Sneak_t
+"xmap T <Plug>Sneak_T
+"omap t <Plug>Sneak_t
+"omap T <Plug>Sneak_T
 "}}}
 
 "=====================General Autocommands====================="{{{
@@ -745,20 +761,20 @@ nmap <leader>dc :NERDTreeCWD<CR>
 
 "=====================TagBar settings====================="{{{
 " toggle taglist window
-nnoremap <silent> <leader>o :TagbarToggle<CR>
+"nnoremap <silent> <leader>o :TagbarToggle<CR>
 
-let g:tagbar_type_xslt = {
-      \ 'ctagstype' : 'xslt',
-      \ 'kinds'     : [
-      \ 'n:templates (named)',
-      \ 'm:templates (matched)',
-      \ 'a:applied templates',
-      \ 'c:called templates',
-      \ 'f:functions',
-      \ 'p:parameters',
-      \ 'v:variables'
-      \ ]
-      \ }
+"let g:tagbar_type_xslt = {
+      "\ 'ctagstype' : 'xslt',
+      "\ 'kinds'     : [
+      "\ 'n:templates (named)',
+      "\ 'm:templates (matched)',
+      "\ 'a:applied templates',
+      "\ 'c:called templates',
+      "\ 'f:functions',
+      "\ 'p:parameters',
+      "\ 'v:variables'
+      "\ ]
+      "\ }
 "}}}
 
 "=====================SuperTab settings====================="{{{
