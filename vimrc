@@ -10,7 +10,7 @@ autocmd!
 "=====================Vundle====================="{{{
 set rtp=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 set rtp+=~/.vim/bundle/vundle/
-set rtp+=~/.vim/ycm/
+"set rtp+=~/.vim/ycm/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
@@ -319,13 +319,13 @@ nnoremap <silent> <leader><leader> @=(foldlevel('.')?'za':'l')<CR>
 
 "=====================Color Related Things====================="{{{
 "colorscheme mayansmoke "a nice light scheme
-if has("gui_running")
+"if has("gui_running")
   set background=dark
   "colorscheme solarized
   colorscheme base16-bright
-else
-  colorscheme zenburn
-endif
+"else
+  "colorscheme zenburn
+"endif
 
 "}}}
 
@@ -556,6 +556,13 @@ let mapleader = ','
 " Edit and source the vimrc file
 nnoremap <silent> <leader>ev :exec ":e " . g:vimrc<CR>
 nnoremap <silent> <leader>sv :exec ":so " . g:vimrc<CR>
+
+" switch windows with alt-arrow keys
+nmap <silent> <c-s-c> :wincmd c<CR>
+nmap <silent> <A-Up> :wincmd k<CR>
+nmap <silent> <A-Down> :wincmd j<CR>
+nmap <silent> <A-Left> :wincmd h<CR>
+nmap <silent> <A-Right> :wincmd l<CR>
 
 " map arrow keys to nothing so I don't use them anymore! learn the hard way
 noremap <Left>  <nop>
