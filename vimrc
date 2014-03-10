@@ -839,6 +839,7 @@ let g:EclimJavaSearchSingleResult = "edit"
 let g:dbext_default_profile_robm1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm1:host=devdb02.ma.net:port=3301"
 let g:dbext_default_profile_robm2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm2:host=devdb02.ma.net:port=3301"
 let g:dbext_default_profile_robm3 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm3:host=devdb02.ma.net:port=3301"
+let g:dbext_default_profile_robm4 = "type=MYSQL:user=medaccess:passwd=madb:dbname=rm_calmmc:host=devdb02.ma.net:port=3301"
 "let g:dbext_default_profile = "rob1"
 let g:dbext_default_prompt_for_parameters = 0 "turn off the 'feature' where it prompts you for parameters
 "}}}
