@@ -10,7 +10,7 @@ autocmd!
 "=====================Vundle====================="{{{
 set rtp=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 set rtp+=~/.vim/bundle/vundle/
-"set rtp+=~/.vim/ycm/
+set rtp+=~/.vim/ycm/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
@@ -57,6 +57,7 @@ Bundle 'terryma/vim-multiple-cursors'
 Bundle 'tpope/vim-dispatch'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-obsession'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
