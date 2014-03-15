@@ -740,7 +740,7 @@ let g:ctrlp_switch_buffer = ""
 let g:ctrlp_clear_cache_on_exit = 0
 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v(\.git|\.svn|etc|build|node_modules|eclipse-build|test-output)$',
+  \ 'dir':  '\v(\.git|\.svn|etc|build|node_modules|bower_components|eclipse-build|test-output)$',
   \ 'file': '\v\.(exe|so|dll|jar|class)$',
   \ }
 "let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*\|etc.*'
