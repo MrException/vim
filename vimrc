@@ -15,7 +15,7 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-sensible'
-
+Bundle 'Lokaltog/vim-distinguished'
 "Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'Lokaltog/vim-powerline' " using vim-airline now
 "Bundle 'jiangmiao/auto-pairs' " possible replacement for delimitMate??
@@ -320,13 +320,13 @@ nnoremap <silent> <leader><leader> @=(foldlevel('.')?'za':'l')<CR>
 
 "=====================Color Related Things====================="{{{
 "colorscheme mayansmoke "a nice light scheme
-"if has("gui_running")
+if has("gui_running")
   set background=dark
   "colorscheme solarized
   colorscheme base16-bright
-"else
-  "colorscheme zenburn
-"endif
+else
+  colorscheme distinguished
+endif
 
 "}}}
 
