@@ -35,6 +35,7 @@ Bundle 'docunext/closetag.vim'
 "Bundle 'goldfeld/vim-seek' " replaced by vim-sneak
 Bundle 'groenewege/vim-less'
 Bundle 'itspriddle/vim-jquery'
+Bundle 'ivan-cukic/vim-ctrlp-switcher'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'justinmk/vim-gtfo'
 Bundle 'justinmk/vim-sneak'
@@ -52,6 +53,7 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
+Bundle 'tacahiroy/ctrlp-funky'
 Bundle 'https://bitbucket.org/teramako/jscomplete-vim.git'
 Bundle 'terryma/vim-expand-region'
 Bundle 'terryma/vim-multiple-cursors'
@@ -198,7 +200,7 @@ set noshowmode
 set mousehide
 
 " enable mouse usage in terminal vim, good for moving splits
-set mouse=a
+"set mouse=a
 
 " supposed to fix tmux mouse usage
 set ttymouse=xterm2
@@ -278,20 +280,22 @@ endif
 "}}}
 
 "=====================GUI options====================="{{{
-" get rid of the toolbar
-set guioptions-=T
-" get rid of right hand scroll bar
-set guioptions-=r
-" get rid of left scrollbar
-set guioptions-=L
-" get rid of menu
-set guioptions-=m
+if has("gui_running")
+  " get rid of the toolbar
+  set guioptions-=T
+  " get rid of right hand scroll bar
+  set guioptions-=r
+  " get rid of left scrollbar
+  set guioptions-=L
+  " get rid of menu
+  set guioptions-=m
 
-" set the font to something nice
-if has("win32")
-  set guifont=Inconsolata:h12
-else
-  set guifont=Inconsolata\ Medium\ 12
+  " set the font to something nice
+  if has("win32")
+    set guifont=Inconsolata:h12
+  else
+    set guifont=Inconsolata\ Medium\ 12
+  endif
 endif
 
 " Set up the gui cursor to look nice
@@ -327,7 +331,10 @@ if has("gui_running")
   colorscheme base16-bright
   "colorscheme distinguished
 else
-  colorscheme distinguished
+  set background=dark
+  let base16colorspace=256  " Access colors present in 256 colorspace
+  colorscheme base16-tomorrow
+  "colorscheme distinguished
 endif
 
 "}}}
@@ -658,8 +665,11 @@ cabbr %% <C-R>=expand('%:p:h') . '/'<CR>
 nnoremap <leader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
 
 " switching forward and backward between buffers
-nnoremap <silent> <C-Tab> :bn<cr>
-nnoremap <silent> <S-Tab> :bp<cr>
+" <C-Tab> doesn't work via ssh or command line
+"nnoremap <silent> <C-Tab> :bn<cr>
+"nnoremap <silent> <S-Tab> :bp<cr>
+nnoremap <silent> <leader><Tab> :bn<cr>
+nnoremap <silent> <leader><S-Tab> :bp<cr>
 
 " running tests
 " Run this file
@@ -737,6 +747,7 @@ augroup END
 
 "=====================CtrlP settings====================="{{{
 " Open files with ,f
+let g:ctrlp_extensions = ["funky","switcher"]
 let g:ctrlp_map = "<leader>f"
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_depth = 100
@@ -748,10 +759,15 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v(\.git|\.svn|etc|build|node_modules|bower_components|eclipse-build|test-output)$',
   \ 'file': '\v\.(exe|so|dll|jar|class)$',
   \ }
-"let g:ctrlp_custom_ignore = '.*class$\|.*sql$\|.*jar$\|.*svn.*\|.*build.*\|etc.*'
+
+let g:ctrlpswitcher_project_sources="server"
 
 nmap <leader>b :CtrlPBuffer<cr>
 nmap <leader>m :CtrlPMRU<cr>
+"nmap <leader>s :CtrlPSwitch<cr>
+nmap <leader>a :let @z=substitute(expand("%:t:r"), "\\..*$", "", "")<CR>:CtrlP<CR><C-\>rz
+
+nmap <leader>u :CtrlPFunky<cr>
 nmap <leader>gw :CtrlP<cr><C-\>w
 nmap <leader>gf vi""zy:CtrlP<cr><C-\>rz
 vmap <leader>gv "zy:CtrlP<cr><C-\>rz
@@ -803,6 +819,7 @@ let g:syntastic_enable_signs=1
 let g:syntastic_check_on_open=1
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_javascript_jshint_conf = '.jshintrc'
+"let g:syntastic_debug=3
 
 " open/update errors window created by syntastic
 nnoremap <C-S-e> :Errors<CR>
@@ -818,8 +835,8 @@ nnoremap <C-S-e> :Errors<CR>
 
 "=====================Ultisnip settings====================="{{{
 let g:UltiSnipsEditSplit = "horizontal"
-let g:UltiSnipsSnippetsDir = "~/.vim/snippets/"
-let g:UltiSnipsSnippetDirectories=["snippets","UltiSnips"]
+let g:UltiSnipsSnippetsDir = "~/.vim/snips/"
+let g:UltiSnipsSnippetDirectories=["snips","UltiSnips"]
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
@@ -872,6 +889,7 @@ call altr#remove_all()
 call altr#define('src/ui/*/%.js', 'src/ui/*/%.spec.js')
 call altr#define('src/ui/*/*/%.js','src/ui/*/*/%.spec.js')
 call altr#define('src/ui/*/*/*/%.js','src/ui/*/*/*/%.spec.js')
+call altr#define('client/js/%.js','client/spec/%.spec.js')
 nmap <F2> <Plug>(altr-forward)
 "}}}
 
