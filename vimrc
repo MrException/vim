@@ -324,8 +324,8 @@ nnoremap <silent> <leader><leader> @=(foldlevel('.')?'za':'l')<CR>
 if has("gui_running")
   set background=dark
   "colorscheme solarized
-  "colorscheme base16-bright
-  colorscheme distinguished
+  colorscheme base16-bright
+  "colorscheme distinguished
 else
   colorscheme distinguished
 endif
