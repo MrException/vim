@@ -98,6 +98,12 @@ it("${1:description}", inject(function(${2:dep}) {
 }));
 endsnippet
 
+snippet bef "beforeEach" !b
+beforeEach(function() {
+	$0
+});
+endsnippet
+
 snippet befi "beforeEach with inject" !b
 beforeEach(inject(function(${1:dep}) {
 	$0

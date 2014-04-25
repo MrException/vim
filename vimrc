@@ -325,6 +325,9 @@ if has("gui_running")
   "colorscheme solarized
   colorscheme base16-bright
 else
+  set background=dark
+  "let base16colorspace=256  " Access colors present in 256 colorspace
+  "colorscheme base16-tomorrow
   colorscheme distinguished
 endif
 
@@ -798,6 +801,7 @@ let g:syntastic_enable_signs=1
 let g:syntastic_check_on_open=1
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_javascript_jshint_conf = '.jshintrc'
+"let g:syntastic_debug=3
 
 " open/update errors window created by syntastic
 nnoremap <C-S-e> :Errors<CR>
@@ -813,8 +817,8 @@ nnoremap <C-S-e> :Errors<CR>
 
 "=====================Ultisnip settings====================="{{{
 let g:UltiSnipsEditSplit = "horizontal"
-let g:UltiSnipsSnippetsDir = "~/.vim/snippets/"
-let g:UltiSnipsSnippetDirectories=["snippets","UltiSnips"]
+let g:UltiSnipsSnippetsDir = "~/.vim/snips/"
+let g:UltiSnipsSnippetDirectories=["snips","UltiSnips"]
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
@@ -867,6 +871,7 @@ call altr#remove_all()
 call altr#define('src/ui/*/%.js', 'src/ui/*/%.spec.js')
 call altr#define('src/ui/*/*/%.js','src/ui/*/*/%.spec.js')
 call altr#define('src/ui/*/*/*/%.js','src/ui/*/*/*/%.spec.js')
+call altr#define('client/js/%.js','client/spec/%.spec.js')
 nmap <F2> <Plug>(altr-forward)
 "}}}
 
