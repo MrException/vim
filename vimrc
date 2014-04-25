@@ -28,6 +28,7 @@ Bundle 'arecarn/crunch'
 Bundle 'bling/vim-airline'
 Bundle 'chriskempson/base16-vim'
 Bundle 'dbarsam/vim-bufkill'
+Bundle 'dhruvasagar/vim-vinegar'
 Bundle 'docunext/closetag.vim'
 "Bundle 'embear/vim-localvimrc' " somethign to look into using in the future
 "Bundle 'ervandew/supertab' " use YCM now
@@ -46,7 +47,7 @@ Bundle 'kshenoy/vim-signature'
 Bundle 'mattn/emmet-vim'
 Bundle 'maxbrunsfeld/vim-yankstack'
 Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'mileszs/ack.vim'
+"Bundle 'mileszs/ack.vim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
@@ -323,7 +324,8 @@ nnoremap <silent> <leader><leader> @=(foldlevel('.')?'za':'l')<CR>
 if has("gui_running")
   set background=dark
   "colorscheme solarized
-  colorscheme base16-bright
+  "colorscheme base16-bright
+  colorscheme distinguished
 else
   set background=dark
   "let base16colorspace=256  " Access colors present in 256 colorspace
@@ -659,8 +661,8 @@ cabbr %% <C-R>=expand('%:p:h') . '/'<CR>
 nnoremap <leader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
 
 " switching forward and backward between buffers
-nnoremap <silent> <leader><Tab> :bn<cr>
-nnoremap <silent> <leader><S-Tab> :bp<cr>
+nnoremap <silent> <C-Tab> :bn<cr>
+nnoremap <silent> <S-Tab> :bp<cr>
 
 " running tests
 " Run this file
@@ -686,7 +688,7 @@ nmap [[ [m
 
 nnoremap <leader>L kA {<esc>jo}<esc>k==
 
-nmap <leader># :set relativenumber!<cr>
+nmap # :set relativenumber!<cr>
 
 " find version control conflict markers
 nnoremap <silent> ]C /\v^[<>=]{4}($\|\s)<CR>
@@ -711,6 +713,9 @@ nmap S <Plug>SneakBackward
 "xmap T <Plug>Sneak_T
 "omap t <Plug>Sneak_t
 "omap T <Plug>Sneak_T
+
+vmap v <Plug>(expand_region_expand)
+vmap V <Plug>(expand_region_shrink)
 "}}}
 
 "=====================General Autocommands====================="{{{
@@ -885,6 +890,8 @@ let g:airline_right_sep=''
 let g:airline_section_b='' " remove (hunks, branch)
 let g:airline_section_y='' " remove (fileencoding, fileformat)
 let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
 "}}}
 
 "=====================tern settings====================="{{{
