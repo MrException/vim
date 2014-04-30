@@ -25,6 +25,7 @@ Bundle 'SirVer/ultisnips'
 "Bundle 'Valloric/YouCompleteMe' " still using YCM, but handling manually because of binaries
 "Bundle 'altercation/vim-colors-solarized' " based16 instead
 Bundle 'arecarn/crunch'
+Bundle 'benmills/vimux'
 Bundle 'bling/vim-airline'
 Bundle 'chriskempson/base16-vim'
 Bundle 'dbarsam/vim-bufkill'
@@ -35,7 +36,6 @@ Bundle 'docunext/closetag.vim'
 "Bundle 'goldfeld/vim-seek' " replaced by vim-sneak
 Bundle 'groenewege/vim-less'
 Bundle 'itspriddle/vim-jquery'
-Bundle 'ivan-cukic/vim-ctrlp-switcher'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'justinmk/vim-gtfo'
 Bundle 'justinmk/vim-sneak'
@@ -747,7 +747,7 @@ augroup END
 
 "=====================CtrlP settings====================="{{{
 " Open files with ,f
-let g:ctrlp_extensions = ["funky","switcher"]
+let g:ctrlp_extensions = ["funky"]
 let g:ctrlp_map = "<leader>f"
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_depth = 100
@@ -760,13 +760,9 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll|jar|class)$',
   \ }
 
-let g:ctrlpswitcher_project_sources="server"
-
 nmap <leader>b :CtrlPBuffer<cr>
 nmap <leader>m :CtrlPMRU<cr>
-"nmap <leader>s :CtrlPSwitch<cr>
 nmap <leader>a :let @z=substitute(expand("%:t:r"), "\\..*$", "", "")<CR>:CtrlP<CR><C-\>rz
-
 nmap <leader>u :CtrlPFunky<cr>
 nmap <leader>gw :CtrlP<cr><C-\>w
 nmap <leader>gf vi""zy:CtrlP<cr><C-\>rz
@@ -909,4 +905,13 @@ let g:airline#extensions#tabline#show_buffers = 1
 
 "=====================tern settings====================="{{{
 "let g:tern_show_argument_hints = 'on_hold'
+"}}}
+
+"=====================vimux settings====================="{{{
+nmap <leader>xt :call VimuxRunCommand("clear; npm test")<CR>
+nmap <leader>xk :call VimuxRunCommand("clear; npm run-script karma")<CR>
+nmap <leader>xq :call VimuxCloseRunner()<CR>
+nmap <leader>xx :call VimuxInterruptRunner()<CR>
+nmap <leader>xi :call VimuxInspectRunner()<CR>
+nmap <leader>xz :call VimuxZoomRunner()<CR>
 "}}}
