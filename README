@@ -4,6 +4,8 @@ Simply check this out and rename the directory to $HOME/.vim
 Then copy the vim-init file to $HOME/.vimrc
 Next get Vundle and put it in the bundle directory.
 
+Make sure to create folds 'swap', 'backup', and 'undo' in your ~/.vim/ folder.
+
 Open Vim and run :BundleInstall to install all the vundle stuff. Restart and you
 are good to go! Or use: vim +BundleInstall +qall
 
