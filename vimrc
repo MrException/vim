@@ -8,70 +8,73 @@ set nocompatible
 autocmd!
 
 "=====================Vundle====================="{{{
+filetype off
 set rtp=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 set rtp+=~/.vim/bundle/vundle/
 set rtp+=~/.vim/ycm/
-call vundle#rc()
+call vundle#begin()
 
-Bundle 'gmarik/vundle'
-Bundle 'tpope/vim-sensible'
-Bundle 'Lokaltog/vim-distinguished'
-"Bundle 'Lokaltog/vim-easymotion'
-"Bundle 'Lokaltog/vim-powerline' " using vim-airline now
-"Bundle 'jiangmiao/auto-pairs' " possible replacement for delimitMate??
-Bundle 'Raimondi/delimitMate'
-Bundle 'SirVer/ultisnips'
-"Bundle 'Shougo/neocomplete.vim' " using YCM now
-"Bundle 'Valloric/YouCompleteMe' " still using YCM, but handling manually because of binaries
-"Bundle 'altercation/vim-colors-solarized' " based16 instead
-Bundle 'arecarn/crunch'
-Bundle 'benmills/vimux'
-Bundle 'bling/vim-airline'
-Bundle 'chriskempson/base16-vim'
-Bundle 'dbarsam/vim-bufkill'
-Bundle 'dhruvasagar/vim-vinegar'
-Bundle 'docunext/closetag.vim'
-"Bundle 'embear/vim-localvimrc' " somethign to look into using in the future
-"Bundle 'ervandew/supertab' " use YCM now
-"Bundle 'goldfeld/vim-seek' " replaced by vim-sneak
-Bundle 'groenewege/vim-less'
-Bundle 'itspriddle/vim-jquery'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'justinmk/vim-gtfo'
-Bundle 'justinmk/vim-sneak'
-Bundle 'kana/vim-altr'
-Bundle 'kien/ctrlp.vim'
-Bundle 'kshenoy/vim-signature'
-"Bundle 'maciakl/vim-neatstatus' " using vim-airline now
-"Bundle 'majutsushi/tagbar'
-"Bundle 'marijnh/tern_for_vim' " tern just to slow, us jscomplete-vim for now
-Bundle 'mattn/emmet-vim'
-Bundle 'maxbrunsfeld/vim-yankstack'
-Bundle 'michaeljsmith/vim-indent-object'
-"Bundle 'mileszs/ack.vim'
-Bundle 'pangloss/vim-javascript'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'tacahiroy/ctrlp-funky'
-Bundle 'https://bitbucket.org/teramako/jscomplete-vim.git'
-Bundle 'terryma/vim-expand-region'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-obsession'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-"Bundle 'vim-scripts/YankRing.vim' " using vim-yankstack now
-Bundle 'vim-scripts/ZoomWin'
-Bundle 'vim-scripts/dbext.vim'
-Bundle 'vim-scripts/matchit.zip'
+Plugin 'gmarik/vundle'
+Plugin 'tpope/vim-sensible'
+Plugin 'Lokaltog/vim-distinguished'
+"Plugin 'Lokaltog/vim-easymotion'
+"Plugin 'Lokaltog/vim-powerline' " using vim-airline now
+"Plugin 'jiangmiao/auto-pairs' " possible replacement for delimitMate??
+Plugin 'Raimondi/delimitMate'
+Plugin 'SirVer/ultisnips'
+"Plugin 'Shougo/neocomplete.vim' " using YCM now
+"Plugin 'Valloric/YouCompleteMe' " still using YCM, but handling manually because of binaries
+"Plugin 'altercation/vim-colors-solarized' " based16 instead
+Plugin 'arecarn/crunch'
+Plugin 'benmills/vimux'
+Plugin 'bling/vim-airline'
+Plugin 'chriskempson/base16-vim'
+Plugin 'dbarsam/vim-bufkill'
+Plugin 'dhruvasagar/vim-vinegar'
+Plugin 'docunext/closetag.vim'
+"Plugin 'embear/vim-localvimrc' " somethign to look into using in the future
+"Plugin 'ervandew/supertab' " use YCM now
+"Plugin 'goldfeld/vim-seek' " replaced by vim-sneak
+Plugin 'groenewege/vim-less'
+Plugin 'itspriddle/vim-jquery'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'justinmk/vim-gtfo'
+Plugin 'justinmk/vim-sneak'
+Plugin 'kana/vim-altr'
+Plugin 'kien/ctrlp.vim'
+Plugin 'kshenoy/vim-signature'
+"Plugin 'maciakl/vim-neatstatus' " using vim-airline now
+"Plugin 'majutsushi/tagbar'
+"Plugin 'marijnh/tern_for_vim' " tern just to slow, us jscomplete-vim for now
+Plugin 'mattn/emmet-vim'
+Plugin 'maxbrunsfeld/vim-yankstack'
+Plugin 'michaeljsmith/vim-indent-object'
+"Plugin 'mileszs/ack.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'tacahiroy/ctrlp-funky'
+Plugin 'https://bitbucket.org/teramako/jscomplete-vim.git'
+Plugin 'terryma/vim-expand-region'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-obsession'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+"Plugin 'vim-scripts/YankRing.vim' " using vim-yankstack now
+Plugin 'vim-scripts/ZoomWin'
+Plugin 'vim-scripts/dbext.vim'
+Plugin 'vim-scripts/matchit.zip'
+
+call vundle#end()
+filetype plugin indent on
 "}}}
 
 "=====================General Options====================="{{{
-filetype plugin indent on
 " enable syntax coloring
 syntax enable
 
@@ -830,9 +833,9 @@ nnoremap <C-S-e> :Errors<CR>
 "}}}
 
 "=====================Ultisnip settings====================="{{{
-let g:UltiSnipsEditSplit = "horizontal"
+"let g:UltiSnipsEditSplit = "horizontal"
 let g:UltiSnipsSnippetsDir = "~/.vim/snips/"
-let g:UltiSnipsSnippetDirectories=["snips","UltiSnips"]
+let g:UltiSnipsSnippetDirectories=["snips"]
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
