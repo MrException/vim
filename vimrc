@@ -25,6 +25,7 @@ Plugin 'SirVer/ultisnips'
 "Plugin 'Shougo/neocomplete.vim' " using YCM now
 "Plugin 'Valloric/YouCompleteMe' " still using YCM, but handling manually because of binaries
 "Plugin 'altercation/vim-colors-solarized' " based16 instead
+Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'arecarn/crunch'
 Plugin 'benmills/vimux'
 Plugin 'bling/vim-airline'
@@ -868,7 +869,6 @@ let g:EclimJavaSearchSingleResult = "edit"
 let g:dbext_default_profile_robm1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm1:host=devdb02.ma.net:port=3301"
 let g:dbext_default_profile_robm2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm2:host=devdb02.ma.net:port=3301"
 let g:dbext_default_profile_robm3 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm3:host=devdb02.ma.net:port=3301"
-let g:dbext_default_profile_robm4 = "type=MYSQL:user=medaccess:passwd=madb:dbname=rm_calmmc:host=devdb02.ma.net:port=3301"
 "let g:dbext_default_profile = "rob1"
 let g:dbext_default_prompt_for_parameters = 0 "turn off the 'feature' where it prompts you for parameters
 "}}}
