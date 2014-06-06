@@ -16,16 +16,11 @@ call vundle#begin()
 
 Plugin 'gmarik/vundle'
 Plugin 'tpope/vim-sensible'
+Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'Lokaltog/vim-distinguished'
-"Plugin 'Lokaltog/vim-easymotion'
-"Plugin 'Lokaltog/vim-powerline' " using vim-airline now
-"Plugin 'jiangmiao/auto-pairs' " possible replacement for delimitMate??
+Plugin 'PeterRincker/vim-argumentative'
 Plugin 'Raimondi/delimitMate'
 Plugin 'SirVer/ultisnips'
-"Plugin 'Shougo/neocomplete.vim' " using YCM now
-"Plugin 'Valloric/YouCompleteMe' " still using YCM, but handling manually because of binaries
-"Plugin 'altercation/vim-colors-solarized' " based16 instead
-Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'arecarn/crunch'
 Plugin 'benmills/vimux'
 Plugin 'bling/vim-airline'
@@ -33,43 +28,53 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'dbarsam/vim-bufkill'
 Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'docunext/closetag.vim'
-"Plugin 'embear/vim-localvimrc' " somethign to look into using in the future
-"Plugin 'ervandew/supertab' " use YCM now
-"Plugin 'goldfeld/vim-seek' " replaced by vim-sneak
-Plugin 'groenewege/vim-less'
-Plugin 'itspriddle/vim-jquery'
-Plugin 'jelera/vim-javascript-syntax'
+Plugin 'https://bitbucket.org/teramako/jscomplete-vim.git'
 Plugin 'justinmk/vim-gtfo'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kana/vim-altr'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kshenoy/vim-signature'
-"Plugin 'maciakl/vim-neatstatus' " using vim-airline now
-"Plugin 'majutsushi/tagbar'
-"Plugin 'marijnh/tern_for_vim' " tern just to slow, us jscomplete-vim for now
 Plugin 'mattn/emmet-vim'
 Plugin 'maxbrunsfeld/vim-yankstack'
 Plugin 'michaeljsmith/vim-indent-object'
-"Plugin 'mileszs/ack.vim'
-Plugin 'pangloss/vim-javascript'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
+Plugin 'sheerun/vim-polyglot'
 Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'https://bitbucket.org/teramako/jscomplete-vim.git'
 Plugin 'terryma/vim-expand-region'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-obsession'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-"Plugin 'vim-scripts/YankRing.vim' " using vim-yankstack now
+Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-scripts/ZoomWin'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/matchit.zip'
+Plugin 'wellle/targets.vim'
+
+"Plugin 'Lokaltog/vim-easymotion' " replaced by vim-sneak
+"Plugin 'Lokaltog/vim-powerline' " using vim-airline now
+"Plugin 'jiangmiao/auto-pairs' " possible replacement for delimitMate??
+"Plugin 'Shougo/neocomplete.vim' " using YCM now
+"Plugin 'Valloric/YouCompleteMe' " still using YCM, but handling manually because of binaries
+"Plugin 'altercation/vim-colors-solarized' " based16 instead
+"Plugin 'embear/vim-localvimrc' " somethign to look into using in the future
+"Plugin 'ervandew/supertab' " use YCM now
+"Plugin 'goldfeld/vim-seek' " replaced by vim-sneak
+"Plugin 'groenewege/vim-less' " replaced by vim-polyglot
+"Plugin 'itspriddle/vim-jquery' " replaced by vim-polyglot
+"Plugin 'jelera/vim-javascript-syntax' " replaced by vim-polyglot
+"Plugin 'maciakl/vim-neatstatus' " using vim-airline now
+"Plugin 'majutsushi/tagbar' " not using because it just does not work with JS
+"Plugin 'marijnh/tern_for_vim' " tern just to slow, us jscomplete-vim for now
+"Plugin 'mileszs/ack.vim' " just sticking with the command line for now
+"Plugin 'pangloss/vim-javascript' " replaced by vim-polyglot
+"Plugin 'tpope/vim-markdown' " replaced by vim-polyglot
+"Plugin 'vim-scripts/YankRing.vim' " using vim-yankstack now
 
 call vundle#end()
 filetype plugin indent on
@@ -670,10 +675,11 @@ nnoremap <leader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
 
 " switching forward and backward between buffers
 " <C-Tab> doesn't work via ssh or command line
+" using unimpaired now ]b [b
 "nnoremap <silent> <C-Tab> :bn<cr>
 "nnoremap <silent> <S-Tab> :bp<cr>
-nnoremap <silent> <leader><Tab> :bn<cr>
-nnoremap <silent> <leader><S-Tab> :bp<cr>
+"nnoremap <silent> <leader><Tab> :bn<cr>
+"nnoremap <silent> <leader><S-Tab> :bp<cr>
 
 " running tests
 " Run this file
