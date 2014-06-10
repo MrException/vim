@@ -214,6 +214,9 @@ set mousehide
 " supposed to fix tmux mouse usage
 set ttymouse=xterm2
 
+" make yank and past use the system clipboard
+set clipboard=unnamed
+
 " faster rendering in console
 set ttyfast
 
@@ -654,8 +657,9 @@ noremap <silent> <leader>cc ,c<space>
 "nnoremap <silent> <leader>v :r ! xclip -o<CR>
 
 " mapping to paste to the system clipboard
-nnoremap <silent> <leader>v "*p
-vnoremap <silent> <leader>c "*y
+" now using the 'clipboard' option, see higher up in this file
+"nnoremap <silent> <leader>v "*p
+"vnoremap <silent> <leader>c "*y
 
 " run a test.sh script in the current directory
 nnoremap <silent> <A-T> :!./test.sh<CR>
