@@ -28,6 +28,7 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'dbarsam/vim-bufkill'
 Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'docunext/closetag.vim'
+Plugin 'embear/vim-localvimrc'
 Plugin 'https://bitbucket.org/teramako/jscomplete-vim.git'
 Plugin 'justinmk/vim-gtfo'
 Plugin 'justinmk/vim-sneak'
@@ -36,6 +37,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'kshenoy/vim-signature'
 Plugin 'mattn/emmet-vim'
 Plugin 'maxbrunsfeld/vim-yankstack'
+Plugin 'mhinz/vim-signify'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
@@ -56,6 +58,11 @@ Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/matchit.zip'
 Plugin 'wellle/targets.vim'
 
+"Plugin '1995eaton/vim-better-css-completion'
+"Plugin '1995eaton/vim-better-javascript-completion'
+"Plugin 'christoomey/vim-tmux-navigator' " another helpful tmux plugin
+"Plugin 'kien/rainbow_parentheses.vim' " rainbow perens!
+"Plugin 'airblade/vim-gitgutter' " vim-signify is a superset, but not sure if it's actually better
 "Plugin 'Lokaltog/vim-easymotion' " replaced by vim-sneak
 "Plugin 'Lokaltog/vim-powerline' " using vim-airline now
 "Plugin 'jiangmiao/auto-pairs' " possible replacement for delimitMate??
@@ -301,6 +308,8 @@ if has("gui_running")
   set guioptions-=L
   " get rid of menu
   set guioptions-=m
+  " don't use popups for input
+  set guioptions+=c
 
   " set the font to something nice
   if has("win32")
