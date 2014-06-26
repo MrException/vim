@@ -29,3 +29,7 @@ This config works best with some things set up:
 - python installed
 - BeautifulSoup python lib (for JSON and XML pretting printing)
 - ctags installed
+
+Ok, these aren't really requirements. I run this on one server that only has Vim 7.2, and no lua, ctags, or
+BeautifulSoup. It runs fine, but some settings report errors on startup, and some mappings don't work.
+However, it is useable.
