@@ -2,7 +2,7 @@
 
 ## Setup
 
-** Backup and move your current `~/.vim` directory and `~/.vimrc` file as this will overwrite those **
+**Backup and move your current `~/.vim` directory and `~/.vimrc` file as this will overwrite those**
 
 Simply check this out to `$HOME/.vim`. Or copy and paste:
 
