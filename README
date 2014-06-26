@@ -1,18 +1,28 @@
-My Vim config.
+# My Vim config.
 
-Simply check this out and rename the directory to $HOME/.vim
-Then copy the vim-init file to $HOME/.vimrc
-Next get Vundle and put it in the bundle directory.
+## Setup
 
-Make sure to create folds 'swap', 'backup', and 'undo' in your ~/.vim/ folder.
+Simply check this out to `$HOME/.vim`. Or copy and paste:
 
-Open Vim and run :BundleInstall to install all the vundle stuff. Restart and you
-are good to go! Or use: vim +BundleInstall +qall
+    git clone https://github.com/MrException/vim.git ~/.vim
 
-This expects you to have some things installed:
--vim with python support
--python
--BeautifulSoup python lib (for JSON and XML pretting printing)
--sed
--ack
--ctags
+Then run the `setup.sh` script:
+
+    cd ~/.vim && bash setup.sh
+
+## What it does
+
+This setup script is pretty simple. What it does:
+- Gets Vundle and puts it in the `~/.vim/bundle` directory
+- Creates some empty folders needed for my config: `swap`, `backup`, and `undo` in your `~/.vim/` folder
+- Starts vim and runs `:BundleInstall` to install all the plugins managed by Vundle
+
+## Required
+
+This config works best with some things set up:
+- vim 7.4
+- vim built with python support
+- vim built with lua support
+- python installed
+- BeautifulSoup python lib (for JSON and XML pretting printing)
+- ctags installed
