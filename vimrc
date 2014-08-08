@@ -25,6 +25,7 @@ Plugin 'arecarn/crunch'
 Plugin 'benmills/vimux'
 Plugin 'bling/vim-airline'
 Plugin 'chriskempson/base16-vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'dbarsam/vim-bufkill'
 Plugin 'dhruvasagar/vim-vinegar'
 Plugin 'docunext/closetag.vim'
@@ -33,7 +34,6 @@ Plugin 'https://bitbucket.org/teramako/jscomplete-vim.git'
 Plugin 'justinmk/vim-gtfo'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kana/vim-altr'
-Plugin 'kien/ctrlp.vim'
 Plugin 'kshenoy/vim-signature'
 Plugin 'mattn/emmet-vim'
 Plugin 'maxbrunsfeld/vim-yankstack'
@@ -43,6 +43,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'szw/vim-ctrlspace'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'terryma/vim-expand-region'
 Plugin 'terryma/vim-multiple-cursors'
@@ -58,6 +59,7 @@ Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/matchit.zip'
 Plugin 'wellle/targets.vim'
 
+"Plugin 'kien/ctrlp.vim' " original CtrlP - replaced by more active fork
 "Plugin '1995eaton/vim-better-css-completion'
 "Plugin '1995eaton/vim-better-javascript-completion'
 "Plugin 'christoomey/vim-tmux-navigator' " another helpful tmux plugin
@@ -313,7 +315,8 @@ if has("gui_running")
 
   " set the font to something nice
   if has("win32")
-    set guifont=Inconsolata:h12
+    "set guifont=Inconsolata:h12
+    set guifont=Source\ Code\ Pro:h11
   else
     set guifont=Inconsolata\ Medium\ 12
   endif
@@ -349,7 +352,8 @@ nnoremap <silent> <leader><leader> @=(foldlevel('.')?'za':'l')<CR>
 if has("gui_running")
   set background=dark
   "colorscheme solarized
-  colorscheme base16-bright
+  "colorscheme base16-bright
+  colorscheme base16-brewer
   "colorscheme distinguished
 else
   set background=dark
@@ -730,19 +734,19 @@ nmap s <Plug>SneakForward
 nmap S <Plug>SneakBackward
 
 "replace 'f' with inclusive 1-char Sneak
-"nmap f <Plug>Sneak_f
-"nmap F <Plug>Sneak_F
-"xmap f <Plug>Sneak_f
-"xmap F <Plug>Sneak_F
-"omap f <Plug>Sneak_f
-"omap F <Plug>Sneak_F
+nmap f <Plug>Sneak_f
+nmap F <Plug>Sneak_F
+xmap f <Plug>Sneak_f
+xmap F <Plug>Sneak_F
+omap f <Plug>Sneak_f
+omap F <Plug>Sneak_F
 "replace 't' with exclusive 1-char Sneak
-"nmap t <Plug>Sneak_t
-"nmap T <Plug>Sneak_T
-"xmap t <Plug>Sneak_t
-"xmap T <Plug>Sneak_T
-"omap t <Plug>Sneak_t
-"omap T <Plug>Sneak_T
+nmap t <Plug>Sneak_t
+nmap T <Plug>Sneak_T
+xmap t <Plug>Sneak_t
+xmap T <Plug>Sneak_T
+omap t <Plug>Sneak_t
+omap T <Plug>Sneak_T
 
 vmap v <Plug>(expand_region_expand)
 vmap V <Plug>(expand_region_shrink)
@@ -923,6 +927,7 @@ let g:airline_section_y='' " remove (fileencoding, fileformat)
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
+let g:airline_exclude_preview = 1
 "}}}
 
 "=====================tern settings====================="{{{
