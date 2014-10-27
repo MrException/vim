@@ -104,6 +104,10 @@ set fileformats=unix,dos
 " for arduino files
 "autocmd! BufNewFile,BufRead *.pde setlocal ft=arduino
 
+" automatically save when no action is taken for 1.5 seconds
+set updatetime=1500
+autocmd CursorHold * silent! wa
+
 " sets up backup/undo/swap dirs
 let s:dir = has('win32') ? '$HOME\.vim\' : '~/.vim/'
 if isdirectory(expand(s:dir))
@@ -572,6 +576,18 @@ function! ToggleList(bufname, pfx)
     wincmd p
   endif
 endfunction
+
+"map <leader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+
+"function SortCss()
+   "for i in range(line("1"), line("$"))
+       "exe "/{"
+       "" TODO , = <leader> should be replaced...
+       "exe "silent! normal j,S"
+   "endfor
+"endfunction
+
+"command SortFile call SortCss()
 "}}}
 
 "=====================Key Mappings====================="{{{
@@ -889,9 +905,10 @@ let g:EclimJavaSearchSingleResult = "edit"
 
 "=====================DBEXT settings====================="{{{
 "let g:dbext_default_window_use_horiz = 0 "open split on right instead of bottom
-let g:dbext_default_profile_robm1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm1:host=devdb02.ma.net:port=3301"
-let g:dbext_default_profile_robm2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm2:host=devdb02.ma.net:port=3301"
-let g:dbext_default_profile_robm3 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm3:host=devdb02.ma.net:port=3301"
+let g:dbext_default_profile_robm1 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm1:host=devdb01.ma.net:port=3302"
+let g:dbext_default_profile_robm2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm2:host=devdb01.ma.net:port=3302"
+let g:dbext_default_profile_robm3 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm3:host=devdb01.ma.net:port=3302"
+let g:dbext_default_profile_site4 = "type=MYSQL:user=medaccess:passwd=madb:dbname=site4:host=devdb01.ma.net:port=3302"
 "let g:dbext_default_profile = "rob1"
 let g:dbext_default_prompt_for_parameters = 0 "turn off the 'feature' where it prompts you for parameters
 "}}}
