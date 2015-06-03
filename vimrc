@@ -909,6 +909,7 @@ let g:dbext_default_profile_robm1 = "type=MYSQL:user=medaccess:passwd=madb:dbnam
 let g:dbext_default_profile_robm2 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm2:host=devdb01.ma.net:port=3302"
 let g:dbext_default_profile_robm3 = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm3:host=devdb01.ma.net:port=3302"
 let g:dbext_default_profile_site4 = "type=MYSQL:user=medaccess:passwd=madb:dbname=site4:host=devdb01.ma.net:port=3302"
+let g:dbext_default_profile_VM = "type=MYSQL:user=medaccess:passwd=madb:dbname=robm1:host=127.0.0.1:port=3306"
 "let g:dbext_default_profile = "rob1"
 let g:dbext_default_prompt_for_parameters = 0 "turn off the 'feature' where it prompts you for parameters
 "}}}
